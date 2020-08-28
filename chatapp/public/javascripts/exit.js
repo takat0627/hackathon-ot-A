@@ -10,7 +10,9 @@ function exit() {
     location.href = '/';
 }
 
+
 // サーバから受信した退室メッセージを画面上に表示する
-socket.on('receiveExitEvent', function (data) {
+socket.on('receiveExitEvent', function (data, dtFormat) {
     $('#thread').prepend('<p>' +data+"さんが退出しました"+ '</p>');
+    $('#thread').prepend('<p>-----' + dtFormat + '</p>');
 });
