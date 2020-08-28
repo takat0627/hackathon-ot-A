@@ -8,6 +8,7 @@
   "dependencies": {
     "body-parser": "~1.19.0",
     "cookie-parser": "~1.4.5",
+    "date-utils": "^1.2.21",
     "debug": "~4.1.1",
     "express": "~4.17.1",
     "hbs": "^4.1.1",
