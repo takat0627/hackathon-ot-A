@@ -7,6 +7,11 @@ module.exports = function (socket, io) {
         if (!message) {
             return;
         }
+        if (!message.replace(/\s/g, '').length) {
+            console.log("this string is only include space or line breaks");
+            return;
+        }
+
         console.log('client\'s name: ' + userName);
         console.log('client\'s message: ' + message);
         console.log('sucess!\n')
