@@ -16,9 +16,6 @@ function publish() {
     socket.emit('sendMessageEvent', data);
     console.log("this string is only include space or line breaks");
     return;
-
-
-    return false;
 }
 
 // サーバから受信した投稿メッセージを画面上に表示する
