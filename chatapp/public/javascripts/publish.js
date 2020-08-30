@@ -9,7 +9,7 @@ function publish() {
 
     if (!message) {
         return;
-    }	        }
+    }	      
 
     if (!message.replace(/\s/g, '').length) {
         // dataにユーザー名とメッセージをJSON化
