@@ -28,7 +28,7 @@ module.exports = function (socket, io) {
             // 最終投稿ユーザーを更新
             lastuser = data.userName;
         }
-<<<<<<< Updated upstream
+
         if (!message.replace(/\s/g, '').length) {
             console.log("this string is only include space or line breaks");
             return;
@@ -39,9 +39,6 @@ module.exports = function (socket, io) {
         console.log('sucess!\n')
         // ここで投稿メッセージを送信する
         io.sockets.emit('publishMessageEvent', userName, message);
-=======
-
->>>>>>> Stashed changes
 
     });
 };
