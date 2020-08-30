@@ -11,13 +11,12 @@ function publish() {
         return;
     }	      
 
-    if (!message.replace(/\s/g, '').length) {
-        // dataにユーザー名とメッセージをJSON化
-        var data = { 'userName': userName, 'message': message };
-        socket.emit('sendMessageEvent', data);
-        console.log("this string is only include space or line breaks");
-        return;
-    }
+    // dataにユーザー名とメッセージをJSON化
+    var data = { 'userName': userName, 'message': message };
+    socket.emit('sendMessageEvent', data);
+    console.log("this string is only include space or line breaks");
+    return;
+
 
     return false;
 }
