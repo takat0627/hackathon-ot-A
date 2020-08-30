@@ -7,20 +7,25 @@ function publish() {
     // 入力されたメッセージを取得
     const message = $('#message').val().split('\n').join('<br>');
 
-    if (!message) {
-        return;
-    }	      
-
     // dataにユーザー名とメッセージをJSON化
-    var data = { 'userName': userName, 'message': message };
+    let data = { 'userName': userName, 'message': message, 'dtFormat': '' };
+
+    // 投稿内容を送信
     socket.emit('sendMessageEvent', data);
-    console.log("this string is only include space or line breaks");
-    return;
+
+    return false;
 }
 
 // サーバから受信した投稿メッセージを画面上に表示する
-socket.on('publishMessageEvent', function (data, dtFormat) {
-    $('#thread').prepend('<p>' + `${data.userName}`);
-    $('#thread').prepend('<p>' + `${data.message}` + '</p>');
-    $('#thread').prepend('<p>' + `${dtFormat}` + '</p>');
+socket.on('publishMessageEvent', function (data) {
+    const myName = $('#userName').val();
+    let userMessage = '<p>' + data.message + '</p>'
+    if (myName !== data.userName) {
+        // タグに追加するスタイル
+        const newStyle = `style=\"color: blue;\"`
+        userMessage = '<p ' + newStyle + ' >' + data.message + '</p >'
+    }
+    $('#thread').append('<p>' + `userName : ${data.userName}` + '</p >');
+    $('#thread').append(userMessage);
+    $('#thread').append('<p>' + `date : ${data.dtFormat}` + '</p>');
 });
