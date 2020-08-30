@@ -22,8 +22,20 @@ function publish() {
 }
 
 // サーバから受信した投稿メッセージを画面上に表示する
+<<<<<<< Updated upstream
 socket.on('publishMessageEvent', function (data, dtFormat) {
     $('#thread').prepend('<p>' + `${data.userName}`);
     $('#thread').prepend('<p>' + `${data.message}` + '</p>');
     $('#thread').prepend('<p>' + `${dtFormat}` + '</p>');
 });
+=======
+socket.on('publishMessageEvent', function (userName, message) {
+    const myName = $('#userName').val();
+    let userMessage = '<p>' + `${userName} : ${message}` + '</p >'
+    if (myName !== userName) {
+        const newStyle = `style=\"color: blue;\"`
+        userMessage = '<p ' + newStyle + ' >' + `${userName} : ${message}` + '</p >'
+    }
+    $('#thread').prepend(userMessage);
+});
+>>>>>>> Stashed changes
