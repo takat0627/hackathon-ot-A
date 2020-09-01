@@ -29,3 +29,25 @@ socket.on('publishMessageEvent', function (data) {
     $('#thread').append(userMessage);
     $('#thread').append('<p>' + `date : ${data.dtFormat}` + '</p>');
 });
+
+
+/* 
+    - “テキストフォーム選択時”にCommand+Enterキーで投稿
+    
+    Enterキーは改行で使うからここは取り合えずよく使うcmd+Enterで設定
+    (キーコード)
+    Enter : 13
+    コマンド：54(右), 55(左)，ただし，これらはevent.metaKeyで指定できる
+
+    // 参考
+    https://developer.mozilla.org/ja/docs/Web/API/KeyboardEvent
+*/
+$(function(){
+    $('#message').keydown(function(event){
+        // 他のキーも割り当てればメモの投稿などもキーボードから可能
+        if(event.metaKey && event.keyCode === 13){
+            console.log('Pushed command and enter key.');
+            publish();
+        }
+    });
+});
