@@ -58,3 +58,4 @@ hackathon-chatapp
 * No.3 投稿日時機能の追加
 * No.4 コメントの改行を正しく表示
 * No.7 同じユーザーから連続で表示されない
+* 「Command+Enterキーで投稿」を実装．
