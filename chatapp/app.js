@@ -5,8 +5,9 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const bodyParser = require('body-parser');
-
+const nodemon = require("nodemon");
 const routes = require('./routes/index');
 
 const app = express();
@@ -20,8 +21,28 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// express-sessionモジュールを追加
+// ページ遷移しても現在ユーザーの情報を保持できるらしい
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 30 * 60 * 1000
+  }
+}));
+
+let sessionCheck = function(req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    res.redirect('/index');
+  }
+};
 
 app.use('/', routes);
 
@@ -55,6 +76,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
