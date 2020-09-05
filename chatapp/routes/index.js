@@ -8,7 +8,7 @@ const router = express.Router();
 // ログイン画面の表示
 router.get('/', function(request, response, next) {
     var session = request.session;
-    
+    request.session.username = null;
     response.render('index', { 'visitCount' :session.visitCount });
     // response.end();
 });
