@@ -3,8 +3,18 @@
         <h1>{{ userName }}さんの個人タスク一覧ページ</h1>
     </div>
     <nav>
-        <a href="/room" class="btn">チャット画面へ</a>
-        <a href="/task" class="btn">全体タスク画面へ</a>
+        {{!-- チャット画面へ入室 --}}
+        <div>
+            <button onclick="enter();"  class="common-button index-enter_button">チャットに入室</button>
+        </div>
+        {{!-- 全体タスク画面へページ遷移 --}}＿
+        <div>
+            <a href="/task" class="btn" >全体タスク画面へ</a>
+        </div>
+        {{!-- ログアウト --}}
+        <div>
+            <a href="/" class="btn" >ログアウト</a>
+        </div>
     </nav>
 
     <div class="row main">
@@ -15,4 +25,5 @@
     </div>
 </div>
 
-<script src="/javascripts/index.js"></script>
+<script src="/javascripts/socket.js"></script>
+<script src="/javascripts/enter.js"></script>

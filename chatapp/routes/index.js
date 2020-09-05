@@ -8,13 +8,13 @@ const router = express.Router();
 // ログイン画面の表示
 router.get('/', function(request, response, next) {
     var session = request.session;
+    // セッション中のユーザーをリセット
     request.session.username = null;
-    response.render('index', { 'visitCount' :session.visitCount });
+    response.render('index');
     // response.end();
 });
 
-// 個人タスク一覧画面
-// taskにPOSTした時の処理
+// 個人タスク一覧画面(ログイン時のみ)
 router.post('/user', function(request, response, next) {
     const db = new sqlite3.Database('user.db');
 
@@ -45,6 +45,12 @@ router.post('/user', function(request, response, next) {
     });
     db.close();
     response.render('user', { userName: request.session.username });//入力値をuserNameに代入
+});
+
+// チャット退出後→個人一覧画面(データベースで情報取得の必要性がないためGET)
+router.get('/user', function (request, response, next){
+     // requestからユーザー情報を取得する
+     response.render('user', { userName: request.session.username });
 });
 
 // チャット画面の表示
