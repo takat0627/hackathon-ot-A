@@ -4,7 +4,7 @@ const express = require('express');
 const { render } = require('../app');
 const router = express.Router();
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('chatTodo');
+
 
 // ログイン画面の表示
 router.get('/', function (request, response, next) {
@@ -16,6 +16,7 @@ router.get('/', function (request, response, next) {
 
 // チャット画面の表示
 router.post('/user', function (request, response, next) {
+    const db = new sqlite3.Database('chatTodo');
     console.log('ユーザ名：' + request.body.userName);
     // DBの処理
     db.serialize(function () {
@@ -35,7 +36,8 @@ router.post('/user', function (request, response, next) {
                 }
                 else {
                     if (row !== undefined) {
-                        request.session.username = row;
+                        request.session.username = row.name;
+                        response.redirect('/user');
                         user_exists = true;
                     }
                     resolve(user_exists);
@@ -50,11 +52,11 @@ router.post('/user', function (request, response, next) {
                 stmt.run([request.body.userName]);
                 stmt.finalize();
                 request.session.username = request.body.userName;
+                response.redirect('/user');
             }
+            db.close();
         });
     });
-    db.close();
-    response.redirect('/user');
 });
 
 // チャット退出後→個人一覧画面(データベースで情報取得の必要性がないためGET)
