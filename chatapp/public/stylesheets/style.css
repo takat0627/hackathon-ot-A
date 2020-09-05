@@ -6,7 +6,7 @@ body {
 }
 
 a {
-    color: #00B7FF;
+    color: rgb(230, 236, 238);
 }
 
 div {
@@ -17,6 +17,26 @@ div {
     margin: 20px;
 }
 
+
+.content {
+    background-color: #ffffff;
+    width: 760px;
+    overflow: hidden;
+}
+
+.main {
+    background-color: #ffffff;
+    width: 584px;
+    float: right;
+}
+
+nav {
+    color: #ffffff;
+    background-color: #ff0000;
+    width: 144px;
+    float: left;
+    }
+    
 /*
  * ボタンの共通設定
  */
