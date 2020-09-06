@@ -66,7 +66,7 @@ router.get('/room', function (request, response, next){
     response.render('room', { userName: request.session.username });
 });
 
-//全体タスク画面の表示
+// 全体たすく画面の表示
 router.get('/task', function (request, response, next){
 
     const db = new sqlite3.Database('task.db');
