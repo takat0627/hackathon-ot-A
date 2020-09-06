@@ -4,11 +4,9 @@
     </div>
     <div class="row">
        <div id='task'>
-         <table>
-                <tr>
-                    <th>内容</th>
-                </tr>
-            </table>
+        {{#each task}}
+            {{ info }}
+        {{~/each}}
        </div>
     </div>
 
