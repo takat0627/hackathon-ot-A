@@ -2,7 +2,7 @@
 
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
-
+const { render } = require('../app');
 const router = express.Router();
 
 // ログイン画面の表示
@@ -16,32 +16,40 @@ router.get('/', function(request, response, next) {
 
 // 個人タスク一覧画面(ログイン時のみ)
 router.post('/user', function(request, response, next) {
-    const db = new sqlite3.Database('user.db');
+    const db = new sqlite3.Database('./db/user.db');
 
-    // response.end();	    
-    // DBの処理
     db.serialize(function () {
         // テーブルがなければ作成
         db.run(`CREATE TABLE IF NOT EXISTS user ( name TEXT )`);
 
-        // 名前を取得している
-        db.get(`SELECT name FROM user WHERE name = ${request.body.userName}`, function (err, row) {
-            if (!err) {
-                // express-sessionモジュールを用いて現在のユーザー情報を保持
-                request.session.username = request.body.userName ;
-            }
+        let create = new Promise(function (resolve, reject) {
+            // 名前を取得している
+            db.get(`SELECT name FROM user WHERE name = '${request.body.userName}'`, function (err, row) {
+                let user_exists = false;
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    if (row !== undefined) {
+                        request.session.username = row.name;
+                        response.redirect('/user');
+                        user_exists = true;
+                    }
+                    resolve(user_exists);
+                }
+            });
         });
 
-        // もしなかったら追加する
-        if (request.session.username == null) {
-            console.log(request.session.username);
-            // prepare Statementでデータ挿入
-            let stmt = db.prepare(`INSERT INTO user VALUES (?)`);
-            stmt.run([request.body.userName]);
-            stmt.finalize();
-            // express-sessionモジュールを用いて現在のユーザー情報を保持
-            request.session.username = request.body.userName ;
-        }
+        create.then(function (user_exists) {
+            if (!user_exists) {
+                // prepare Statementでデータ挿入
+                let stmt = db.prepare(`INSERT INTO user VALUES (?)`);
+                stmt.run([request.body.userName]);
+                stmt.finalize();
+                request.session.username = request.body.userName;
+                response.redirect('/user');
+            }
+        });
     });
     db.close();
     response.render('user', { userName: request.session.username });//入力値をuserNameに代入
@@ -61,8 +69,28 @@ router.get('/room', function (request, response, next){
 
 // チャット画面の表示
 router.get('/task', function (request, response, next){
-    // requestからユーザー情報を取得する
-    response.render('task', { userName: request.session.username });
+    // const db = new sqlite3.Database('task.db');
+    // let taskdata;
+
+    // let gettask = new Promise(function (resolve, reject) {
+    //     db.each('SELECT rowid AS id, info FROM task', function(err, row) {
+    //         if(!err){
+    //             console.log(err);
+    //         }
+    //         else{
+    //             console.log('get success!!');
+    //             taskdata = row;
+    //         }
+    //         resolve(taskdata);
+    //     });
+    //     db.close();
+    // });
+
+    // gettask.then(function (taskdata){
+    //     // requestからユーザー情報を取得する
+    //     response.render('task', taskdata );
+    // })
+    response.render('task', taskdata );
 });
 
 module.exports = router;
