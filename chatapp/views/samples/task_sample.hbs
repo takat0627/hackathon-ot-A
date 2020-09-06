@@ -1,0 +1,621 @@
+{{!-- 
+サンプルなので要素などはハードコーディングしています．
+
+
+# メモ
+https://getbootstrap.jp/docs/4.2/components/collapse/
+
+わかったこと
+1. 
+大元のdivのIDがdata-parentにはいる．ここではall_taskとしている
+2.
+data-toggleはcollapseを指定
+3.
+data-targetには開いたときの要素のIDが入る
+4. 
+子要素のclassにshowがあると初期から開けれる
+showを指定する場合は親のaria-expandedはtrueである必要があるみたい
+
+5. divをstyleで20くらいあけているためにカードを閉めるときに変になっていたので別styleを作成して初期化した
+
+
+現段階の実装イメージ
+新規ユーザが追加されたらタスク表記の中に
+<div class="col mini_task" id="{{user_info}}">〜</div>
+を追加する．
+タスクがない場合の情報（No given task）表記を〜に初期化でいれるのもあり．
+
+ユーザhogehogeにタスクが追加されたらそのユーザの子要素としてappendしていく?
+
+--}}
+
+
+<div class="row">
+    {{!-- sidemenu 可変長 -> ここではユーザー名:Hogehogeに揃う -> chat画面合わせる --}}
+    <div class="col-*" id="sidebar">
+        <div class="sidebar_contents" id="sidebar_contents">
+            <ul>
+                <li>ユーザー名:Hogehoge</li>
+                <li>チャット</li>
+                <li>個人タスク</li>
+                <li>ログアウト</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col" id="main">
+        <h1 id='all_task_title'>全プロジェクトタスク一覧ページ</h1>
+        <div class="row">
+            {{!-- User1 --}}
+            <div class="col mini_task" id="user1">
+                ユーザ1
+                <div class="accordion" id="user1_all_task">
+                    <div class="card">
+                        <div class="card-header" id="user1_task_1">
+                            <h5 class="mb-0">
+                                <label>タスク1</label>
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user1_collapse_1" aria-expanded="false"
+                                    aria-controls="user1_collapse_1">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="user1_collapse_1" class="collapse" aria-labelledby="user1_task_1"
+                            data-parent="#user1_all_task">
+                            <div class="card-body">
+                                テスト1
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user1_task_2">
+                            <h5 class="mb-0">
+                                タスク2
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user1_collapse_2" aria-expanded="false"
+                                    aria-controls="user1_collapse_2">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user1_collapse_2" class="collapse" aria-labelledby="user1_task_2"
+                            data-parent="#user1_all_task">
+                            <div class="card-body">
+                                テスト2
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user1_task_3">
+                            <h5 class="mb-0">
+                                タスク3
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user1_collapse_3" aria-expanded="false"
+                                    aria-controls="user1_collapse_3">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user1_collapse_3" class="collapse" aria-labelledby="user1_task_3"
+                            data-parent="#user1_all_task">
+                            <div class="card-body">
+                                テスト3
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{!-- User2 --}}
+            <div class="col mini_task" id="user2">
+                ユーザ2
+                <div class="accordion" id="user2_all_task">
+                    <div class="card">
+                        <div class="card-header" id="user2_task_1">
+                            <h5 class="mb-0">
+                                <label>タスク1</label>
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user2_collapse_1" aria-expanded="false"
+                                    aria-controls="user2_collapse_1">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="user2_collapse_1" class="collapse" aria-labelledby="user2_task_1"
+                            data-parent="#user2_all_task">
+                            <div class="card-body">
+                                テスト1
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user2_task_2">
+                            <h5 class="mb-0">
+                                タスク2
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user2_collapse_2" aria-expanded="false"
+                                    aria-controls="user2_collapse_2">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user2_collapse_2" class="collapse" aria-labelledby="user2_task_2"
+                            data-parent="#user2_all_task">
+                            <div class="card-body">
+                                テスト2
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user2_task_3">
+                            <h5 class="mb-0">
+                                タスク3
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user2_collapse_3" aria-expanded="false"
+                                    aria-controls="user2_collapse_3">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user2_collapse_3" class="collapse" aria-labelledby="user2_task_3"
+                            data-parent="#user2_all_task">
+                            <div class="card-body">
+                                テスト3
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user2_task_4">
+                            <h5 class="mb-0">
+                                タスク4
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user2_collapse_4" aria-expanded="false"
+                                    aria-controls="user2_collapse_4">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user2_collapse_4" class="collapse" aria-labelledby="user2_task_4"
+                            data-parent="#user2_all_task">
+                            <div class="card-body">
+                                テスト3
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            {{!-- User3 --}}
+            <div class="col mini_task" id="user3">
+                ユーザ3
+                <div class="accordion" id="user3_all_task">
+                    <div class="card">
+                        <div class="card-header" id="user3_task_1">
+                            <h5 class="mb-0">
+                                <label>タスク1</label>
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user3_collapse_1" aria-expanded="false"
+                                    aria-controls="user3_collapse_1">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="user3_collapse_1" class="collapse" aria-labelledby="user3_task_1"
+                            data-parent="#user3_all_task">
+                            <div class="card-body">
+                                テスト1
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user3_task_2">
+                            <h5 class="mb-0">
+                                タスク2
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user3_collapse_2" aria-expanded="false"
+                                    aria-controls="user3_collapse_2">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user3_collapse_2" class="collapse" aria-labelledby="user3_task_2"
+                            data-parent="#user3_all_task">
+                            <div class="card-body">
+                                テスト2
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user3_task_3">
+                            <h5 class="mb-0">
+                                タスク3
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user3_collapse_3" aria-expanded="false"
+                                    aria-controls="user3_collapse_3">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user3_collapse_3" class="collapse" aria-labelledby="user3_task_3"
+                            data-parent="#user3_all_task">
+                            <div class="card-body">
+                                テスト3
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user3_task_4">
+                            <h5 class="mb-0">
+                                タスク4
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user3_collapse_4" aria-expanded="false"
+                                    aria-controls="user3_collapse_4">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user3_collapse_4" class="collapse" aria-labelledby="user3_task_4"
+                            data-parent="#user3_all_task">
+                            <div class="card-body">
+                                テスト3
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{!-- User4 --}}
+            <div class="col mini_task" id="user4">
+                ユーザ4
+                <div class="accordion" id="user4_all_task">
+                    <div class="card">
+                        <div class="card-header" id="user4_task_1">
+                            <h5 class="mb-0">
+                                <label>タスク1</label>
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user4_collapse_1" aria-expanded="false"
+                                    aria-controls="user4_collapse_1">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="user4_collapse_1" class="collapse" aria-labelledby="user4_task_1"
+                            data-parent="#user4_all_task">
+                            <div class="card-body">
+                                テスト1
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user4_task_2">
+                            <h5 class="mb-0">
+                                タスク2
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user4_collapse_2" aria-expanded="false"
+                                    aria-controls="user4_collapse_2">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user4_collapse_2" class="collapse" aria-labelledby="user4_task_2"
+                            data-parent="#user4_all_task">
+                            <div class="card-body">
+                                テスト2
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user4_task_3">
+                            <h5 class="mb-0">
+                                タスク3
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user4_collapse_3" aria-expanded="false"
+                                    aria-controls="user4_collapse_3">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user4_collapse_3" class="collapse" aria-labelledby="user4_task_3"
+                            data-parent="#user4_all_task">
+                            <div class="card-body">
+                                テスト3
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            {{!-- User5 --}}
+            <div class="col mini_task" id="user5">
+                ユーザ5
+                <div class="accordion" id="user5_all_task">
+                    <div class="card">
+                        <div class="card-header" id="user5_task_1">
+                            <h5 class="mb-0">
+                                <label>タスク1</label>
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user5_collapse_1" aria-expanded="false"
+                                    aria-controls="user5_collapse_1">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="user5_collapse_1" class="collapse" aria-labelledby="user5_task_1"
+                            data-parent="#user5_all_task">
+                            <div class="card-body">
+                                テスト1
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user5_task_2">
+                            <h5 class="mb-0">
+                                タスク2
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user5_collapse_2" aria-expanded="false"
+                                    aria-controls="user5_collapse_2">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user5_collapse_2" class="collapse" aria-labelledby="user5_task_2"
+                            data-parent="#user5_all_task">
+                            <div class="card-body">
+                                テスト2
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user5_task_3">
+                            <h5 class="mb-0">
+                                タスク3
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user5_collapse_3" aria-expanded="false"
+                                    aria-controls="user5_collapse_3">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user5_collapse_3" class="collapse" aria-labelledby="user5_task_3"
+                            data-parent="#user5_all_task">
+                            <div class="card-body">
+                                テスト3
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{!-- User6 --}}
+            <div class="col mini_task" id="user6">
+                ユーザ6
+                <div class="accordion" id="user6_all_task">
+                    <div class="card">
+                        <div class="card-header" id="user6_task_1">
+                            <h5 class="mb-0">
+                                <label>タスク1</label>
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user6_collapse_1" aria-expanded="false"
+                                    aria-controls="user6_collapse_1">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="user6_collapse_1" class="collapse" aria-labelledby="user6_task_1"
+                            data-parent="#user6_all_task">
+                            <div class="card-body">
+                                テスト1
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user6_task_2">
+                            <h5 class="mb-0">
+                                タスク2
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user6_collapse_2" aria-expanded="false"
+                                    aria-controls="user6_collapse_2">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user6_collapse_2" class="collapse" aria-labelledby="user6_task_2"
+                            data-parent="#user6_all_task">
+                            <div class="card-body">
+                                テスト2
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="user6_task_3">
+                            <h5 class="mb-0">
+                                タスク3
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#user6_collapse_3" aria-expanded="false"
+                                    aria-controls="user6_collapse_3">
+                                    （詳細）
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="user6_collapse_3" class="collapse" aria-labelledby="user6_task_3"
+                            data-parent="#user6_all_task">
+                            <div class="card-body">
+                                テスト3
+                                <ul>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                    <li>タスク</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- taskに関する追加style --}}
+<link rel="stylesheet" href="/stylesheets/task_style.css" />

@@ -92,4 +92,10 @@ router.get('/task', function (request, response, next){
     response.render('task', taskdata );
 });
 
+// 全体タスクのサンプルに対するget
+router.get('/task_sample', function (request, response, next){
+    response.render('samples/task_sample');
+});
+
+
 module.exports = router;

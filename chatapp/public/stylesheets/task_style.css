@@ -1,0 +1,66 @@
+/*
+ * タスク画面に関する設定 -> 現段階では色とかmarginとか適当です．
+ * レスポンシブとか一切考えていません．
+ */
+
+ /* とりあえず全体の中で初期化したいもの */
+ div {
+    margin: initial;
+}
+
+.card-body {
+    margin: initial;
+}
+
+.row {
+    margin: initial;
+}
+
+/* 文字の色とか変えたくない？ */
+.collapsed {
+    /* color: rgb(230, 236, 238); */
+    color:rgb(226, 127, 13);
+}
+
+/* accordionのカードの色を指定している */
+.card-header{
+    background-color:white;
+}
+
+/* 各ユーザカラムのマージンを決めたい */
+.mini_task{
+    margin: 1%;
+}
+
+/* サイドバー関連 今は適当*/
+/* https://youtu.be/UUPSC8ooDOk */
+#sidebar{
+    font-size: 1rem;
+    padding: 1%;
+    
+    min-height: 100vh;
+    background-color: gainsboro;
+}
+
+#sidebar_contents{
+    text-align: center;
+}
+
+#sidebar_contents ul{
+    padding: 0;
+    list-style: none;
+}
+
+#sidebar_contents li {
+    margin-top: 3em;
+}
+
+#main {
+    margin: 3em;
+}
+
+/* 今はただのh1に対して当てている */
+#all_task_title {
+    text-align:center;
+    text-decoration: underline burlywood;
+}
