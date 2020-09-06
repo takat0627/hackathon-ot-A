@@ -4,14 +4,11 @@
     </div>
     <div class="row">
        <div id='task'>
-         <table>
-                <tr>
-                    <th>内容</th>
-                </tr>
-            </table>
-       </div>
+           {{#each task ~}}
+                {{~info}}
+           {{~/each}}
+        </div>
     </div>
-
 </div>
 
 <script src="/javascripts/index.js"></script>
