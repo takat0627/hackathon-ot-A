@@ -2,13 +2,54 @@
     <div class="row">
         <h1>全プロジェクトタスク一覧ページ</h1>
     </div>
-    <div class="row">
-       <div id='task'>
-           {{#each task ~}}
-                {{~info}}
-           {{~/each}}
+        {{#each task}}
+        {{!-- <div class="col mini_task" id="user{{id}}"> --}}
+        {{#if (evenNumberChecker id)}}
+        {{else}}
+            <div class="row">
+        {{/if}}
+                    <div class="col mini_task" id="user{{id}}">
+                        <div class="accordion" id="user{{id}}_all_task">
+                            <div class="card">
+                                <div class="card-header" id="user{{id}}_task_{{info}}">
+                                    <h5 class="mb-0">
+                                        <label>タスク1</label>
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                            data-target="#user{{id}}_collapse_{{info}}" aria-expanded="false"
+                                            aria-controls="user{{id}}_collapse_{{info}}">
+                                            （詳細）
+                                        </button>
+                                    </h5>
+                                </div>
+
+                                <div id="user{{id}}_collapse_{{info}}" class="collapse" aria-labelledby="user{{id}}_task_{{info}}"
+                                    data-parent="#user{{id}}_all_task">
+                                    <div class="card-body">
+                                        テスト1
+                                        <ul>
+                                            <li>タスク</li>
+                                            <li>タスク</li>
+                                            <li>タスク</li>
+                                            <li>タスク</li>
+                                            <li>タスク</li>
+                                            <li>タスク</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        {{#if (evenNumberChecker id)}}
+                  
+
+                    </div>
+                {{else}}
+        
+                {{/if}}
+
+
+                {{/each}}
+                </ul>
+            </div>
         </div>
     </div>
-</div>
-
-<script src="/javascripts/index.js"></script>

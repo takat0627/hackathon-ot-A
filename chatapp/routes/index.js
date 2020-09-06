@@ -70,20 +70,19 @@ router.get('/room', function (request, response, next){
 router.get('/task', function (request, response, next){
 
     const db = new sqlite3.Database('task.db');
-    let test;
 
     // タスク情報取得後に全体タスク画面にrender
     let gettask = new Promise(function (resolve, reject) {
         db.all('SELECT rowid AS id, info FROM task', function(err, rows) {
-            let test;
-            test = { task : rows }
-            resolve(test);
+            let data;
+            data = { task : rows }
+            resolve(data);
         });
     });
 
-    gettask.then( function(test) {
-        console.log(test);
-        response.render('task', { test : test });
+    gettask.then( function(data) {
+        console.log(data);
+        response.render('task', data );
         db.close();
     })
 });

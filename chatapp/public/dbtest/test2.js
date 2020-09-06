@@ -9,7 +9,7 @@ var db = new sqlite3.Database('task.db');
 //     });
 // });
 
-db.serialize(function() {
+
 
     let gettask = new Promise(function (resolve, reject) {
         db.all('SELECT rowid AS id, info FROM task', function(err, rows) {
@@ -23,7 +23,8 @@ db.serialize(function() {
 
     gettask.then( function(test) {
         console.log(test);
+        console.log(test.task[10].id);
         //response.render('task', { test : test });
         db.close();
     })
-});
+
