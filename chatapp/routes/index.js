@@ -49,10 +49,9 @@ router.post('/user', function(request, response, next) {
                 request.session.username = request.body.userName;
                 response.redirect('/user');
             }
+            db.close();
         });
     });
-    db.close();
-    response.render('user', { userName: request.session.username });//入力値をuserNameに代入
 });
 
 // チャット退出後→個人一覧画面(データベースで情報取得の必要性がないためGET)
@@ -67,7 +66,7 @@ router.get('/room', function (request, response, next){
     response.render('room', { userName: request.session.username });
 });
 
-// チャット画面の表示
+// 全体たすく画面の表示
 router.get('/task', function (request, response, next){
     // const db = new sqlite3.Database('task.db');
     // let taskdata;
