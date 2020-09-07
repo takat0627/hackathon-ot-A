@@ -8,7 +8,7 @@ function publish() {
     const message = $('#message').val().split('\n').join('<br>');
 
     // dataにユーザー名とメッセージをJSON化
-    let data = { 'userName': userName, 'message': message, 'dtFormat': '' };
+    let data = { 'userName': userName, 'message': message, 'dtFormat': '', 'id': '' };
 
     // 投稿内容を送信
     socket.emit('sendMessageEvent', data);
@@ -20,14 +20,17 @@ function publish() {
 socket.on('publishMessageEvent', function (data) {
     const myName = $('#userName').val();
     let userMessage = '<p>' + data.message + '</p>'
-    if (myName !== data.userName) {
-        // タグに追加するスタイル
-        const newStyle = `style=\"color: blue;\"`
-        userMessage = '<p ' + newStyle + ' >' + data.message + '</p >'
+    if (myName === data.userName) {
+        $('#msg_history').append('<div class="outgoing_msg"><div class="sent_msg"><div id="outgoing_msg' + data.id + '"></div><span class="time_date" id="outgoing_time_date' + data.id + '"></span></div></div>');
+        $('#outgoing_msg' + data.id).append(userMessage);
+        $('#outgoing_time_date' + data.id).append(data.dtFormat);
     }
-    $('#thread').append('<p>' + `userName : ${data.userName}` + '</p >');
-    $('#thread').append(userMessage);
-    $('#thread').append('<p>' + `date : ${data.dtFormat}` + '</p>');
+    if (myName !== data.userName) {
+        $('#msg_history').append('<div class="incoming_msg"><div class="incoming_msg_img"><img src = "https://ptetutorials.com/images/user-profile.png" alt = "sunil" > </div ><div class="received_msg">' + data.userName + '<div class="received_withd_msg"><div id="incoming_msg' + data.id + '"></div><span class="time_date" id="incoming_time_date' + data.id + '"></span></div></div></div > ')
+        $('#incoming_msg').append('<p>' + `userName : ${data.userName}` + '</p >');
+        $('#incoming_msg' + data.id).append(userMessage);
+        $('#incoming_time_date' + data.id).append(data.dtFormat);
+    }
 });
 
 
@@ -42,10 +45,10 @@ socket.on('publishMessageEvent', function (data) {
     // 参考
     https://developer.mozilla.org/ja/docs/Web/API/KeyboardEvent
 */
-$(function(){
-    $('#message').keydown(function(event){
+$(function () {
+    $('#message').keydown(function (event) {
         // 他のキーも割り当てればメモの投稿などもキーボードから可能
-        if(event.metaKey && event.keyCode === 13){
+        if (event.metaKey && event.keyCode === 13) {
             console.log('Pushed command and enter key.');
             publish();
         }

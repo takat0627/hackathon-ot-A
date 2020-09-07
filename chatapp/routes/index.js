@@ -13,7 +13,6 @@ router.get('/', function(request, response, next) {
     // response.end();
 });
 
-// 個人タスク一覧画面
 // taskにPOSTした時の処理
 router.post('/user', function(request, response, next) {
     const db = new sqlite3.Database('user.db');
@@ -57,6 +56,12 @@ router.get('/room', function (request, response, next){
 router.get('/task', function (request, response, next){
     // requestからユーザー情報を取得する
     response.render('task', { userName: request.session.username });
+});
+
+// タスク作成画面の表示
+router.get('/create-task', function (request, response, next){
+    // requestからユーザー情報を取得する
+    response.render('create-task', { userName: request.session.username });
 });
 
 module.exports = router;
