@@ -13,6 +13,7 @@ const routes = require('./routes/index');
 const app = express();
 
 // view engine setup
+// habdlebars関連
 let expressHbs =  require('express-handlebars');
 let hbs = expressHbs.create({});
 
@@ -20,10 +21,12 @@ app.engine('.hbs', expressHbs({ defaultLayout: 'layout', layoutsDir: 'views', ex
 app.set('views', path.join(__dirname, 'views'));
 
 app.set('view engine', 'hbs');
-// register new function
+
+// habdlebars関連の関数
 hbs.handlebars.registerHelper('evenNumberChecker', function(num) {
   return num % 2 === 0;
 })
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
