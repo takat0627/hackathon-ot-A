@@ -56,8 +56,12 @@ router.post('/user', function(request, response, next) {
 
 // チャット退出後→個人一覧画面(データベースで情報取得の必要性がないためGET)
 router.get('/user', function (request, response, next){
-     // requestからユーザー情報を取得する
-     response.render('user', { userName: request.session.username });
+    if(request.session.username === undefined){
+        response.redirect('/');
+    }else{
+        // requestからユーザー情報を取得する
+        response.render('user', { userName: request.session.username });
+    }
 });
 
 // チャット画面の表示
@@ -68,28 +72,23 @@ router.get('/room', function (request, response, next){
 
 // 全体たすく画面の表示
 router.get('/task', function (request, response, next){
-    // const db = new sqlite3.Database('task.db');
-    // let taskdata;
 
-    // let gettask = new Promise(function (resolve, reject) {
-    //     db.each('SELECT rowid AS id, info FROM task', function(err, row) {
-    //         if(!err){
-    //             console.log(err);
-    //         }
-    //         else{
-    //             console.log('get success!!');
-    //             taskdata = row;
-    //         }
-    //         resolve(taskdata);
-    //     });
-    //     db.close();
-    // });
+    const db = new sqlite3.Database('./db/masaya_sample');
 
-    // gettask.then(function (taskdata){
-    //     // requestからユーザー情報を取得する
-    //     response.render('task', taskdata );
-    // })
-    response.render('task', taskdata );
+    // タスク情報取得後に全体タスク画面にrender
+    let gettask = new Promise(function (resolve, reject) {
+        db.all('SELECT rowid AS id, req, des, date, title, info, bool FROM task', function(err, rows) {
+            let data;
+            data = { task : rows }
+            resolve(data);
+        });
+    });
+
+    gettask.then( function(data) {
+        console.log(data);
+        response.render('task', data );
+        db.close();
+    })
 });
 
 module.exports = router;

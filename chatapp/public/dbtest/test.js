@@ -13,6 +13,7 @@ db.serialize(function () {
             resolve(exists);
         });
       });
+      
     console.log(3);
     
     create.then(function (exists) {
