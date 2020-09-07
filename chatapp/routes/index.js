@@ -73,22 +73,61 @@ router.get('/room', function (request, response, next){
 // 全体たすく画面の表示
 router.get('/task', function (request, response, next){
 
-    const db = new sqlite3.Database('./db/masaya_sample');
+    // const db = new sqlite3.Database('./db/masaya_sample');
+    const db = new sqlite3.Database('./db/multi-samples.db');
 
     // タスク情報取得後に全体タスク画面にrender
-    let gettask = new Promise(function (resolve, reject) {
-        db.all('SELECT rowid AS id, req, des, date, title, info, bool FROM task', function(err, rows) {
-            let data;
-            data = { task : rows }
-            resolve(data);
+    let getdata = new Promise(function (resolve_getdata, reject) {
+        /* 
+            送る形式が以下のようになればいけるようになった．特にhbsのために階層的にする必要がある
+            RDBでこうゆうのすぐに引っ張ってこれるのでしょうか？
+            data = {
+                username : ~~,
+                user : [{
+                    id : 1,
+                    task : [
+                        id=1のタスク配列
+                    ]
+                },
+                {
+                    id : 2,
+                    task : [
+                        id=2のタスク配列
+                    ]
+                },~~~
+                ]
+            }
+        */
+
+        let data = {
+            userName : request.session.username,
+            user : []
+        };
+        // allをeach順通りに実行するにはserializeが中に必須！
+        db.each(`SELECT rowid AS id, info FROM user`, function(err, row) {
+            db.serialize(function() {
+                db.all(`SELECT req, des, date, title, info, bool FROM task WHERE ${row.id}=req`, function(err, rows_task) {
+                    data['user'].push({
+                        id : row.id , 
+                        task : rows_task
+                    });
+                    // この条件でかならずpushされてから送れる！
+                    if (data['user'].length===15){
+                        console.log(data)
+                        resolve_getdata(data);
+                        }
+                });
+            });
         });
     });
 
-    gettask.then( function(data) {
-        console.log(data);
-        response.render('task', data );
+    getdata.then( function(data) {
+        // ログイン中のユーザ名もJSONで送る
+        console.log('user', data.user)
+        console.log('user[0].task', data.user[0].task)
+        response.render('task', data);
         db.close();
-    })
+    });
 });
 
 // （共有用）全体タスクのサンプルに対するget（ひとまず直接URL叩くと見れるようにする）

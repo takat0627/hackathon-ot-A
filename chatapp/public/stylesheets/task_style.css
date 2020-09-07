@@ -17,15 +17,15 @@
 }
 
 /* 文字の色とか変えたくない？ */
-.collapsed {
+/* .collapsed { */
     /* color: rgb(230, 236, 238); */
-    color:rgb(226, 127, 13);
-}
+    /* color:rgb(226, 127, 13); */
+/* } */
 
 /* accordionのカードの色を指定している */
-.card-header{
+/* .card-header{
     background-color:white;
-}
+} */
 
 /* 各ユーザカラムのマージンを決めたい */
 .mini_task{
@@ -52,6 +52,7 @@
 
 #sidebar_contents li {
     margin-top: 3em;
+    color: black;
 }
 
 #main {

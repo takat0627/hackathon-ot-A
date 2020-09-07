@@ -1,62 +1,86 @@
-<div class="container">
-    <div class="row">
-        <h1>全プロジェクトタスク一覧ページ</h1>
+<div class="row">
+    {{!-- sidemenu 可変長 -> ここではユーザー名:Hogehogeに揃う -> chat画面合わせる --}}
+    <div class="col-*" id="sidebar">
+        <div class="sidebar_contents" id="sidebar_contents">
+            <ul>
+                <li>
+                    ユーザー名:{{ userName }}
+                </li>
+                <li>
+                    <a href="/room">チャット</a>
+                </li>
+                <li>
+                    <a href="/user">個人タスク</a>
+                </li>
+                <li>
+                    <a href="/">ログアウト</a>
+                </li>
+            </ul>
+        </div>
     </div>
-        {{#each task}}
-        {{!-- <div class="col mini_task" id="user{{id}}"> --}}
+
+    <div class="col" id="main">
+        <h1 id='all_task_title'>全プロジェクトタスク一覧ページ</h1>
+            {{!-- ひとまずユーザで回す --}}
+        {{#each user}}
         {{#if (evenNumberChecker id)}}
         {{else}}
-            <div class="row">
+        <div class="row">
         {{/if}}
-                    <div class="col mini_task" id="user{{id}}">
-                        <div class="accordion" id="user{{id}}_all_task">
-                            {{#if bool}}
-                            <div class="card text-white bg-primary mb-3">
-                        　　　{{else}}
-                            <div class="card text-white bg-danger mb-3">
-                            {{/if}}
-                            
-                                <div class="card-header" id="user{{id}}_task_{{info}}">
-                                    <h5 class="mb-0">
-                                        <label>タスク名：{{title}}</label>
-                                        <button class="btn btn-light collapsed　btn-secondary" type="button" data-toggle="collapse"
-                                            data-target="#user{{id}}_collapse_{{info}}" aria-expanded="false"
-                                            aria-controls="user{{id}}_collapse_{{info}}">
+            <div class="col mini_task" id="user{{id}}">
+                <label>ユーザ{{id}}</label>
+                <div class="accordion" id="user{{id}}_all_task">
+                {{!-- 階層になっていることに注意！task配下ではuser直下のidを参照するには../が必要 --}}
+                {{#each task}}
+                    {{#if (isEquals ../id req)}}
+                    {{#if bool}}
+                        {{!-- <div class="card"> --}}
+                        <div class="card text-white bg-primary">
+                    {{else}}
+                        {{!-- <div class="card"> --}}
+                        <div class="card text-white bg-danger">
+                    {{/if}}
+                            <div class="card-header" id="user{{../id}}_task_{{title}}">
+                                <h5 class="mb-0">
+                                    <label>タスク名：{{title}}</label>
+                                    <button class="btn btn-light collapsed　btn-secondary" type="button"
+                                        data-toggle="collapse" data-target="#user{{../id}}_collapse_{{title}}"
+                                        aria-expanded="false" aria-controls="user{{../id}}_collapse_{{title}}">
+                                        <p>
                                             {{#if bool}}
-                                            <p>タスク完成：{{bool}}</p>
+                                            タスク完成：{{bool}}
                                             {{else}}
-                                            <p>タスク未完成：{{bool}}</p>
+                                            タスク未完成：{{bool}}
                                             {{/if}}
-                                        </button>
-                                    </h5>
-                                </div>
+                                        </p>
+                                    </button>
+                                </h5>
+                            </div>
 
-                                <div id="user{{id}}_collapse_{{info}}" class="collapse" aria-labelledby="user{{id}}_task_{{info}}"
-                                    data-parent="#user{{id}}_all_task">
-                                    <div class="card-body">
-                                        テスト{{id}}
-                                        <ul>
-                                            <p>タスク名：{{info}}</p>
-                                            <p>タスク期限：{{date}}</p>
-                                            <p>タスク依頼者：{{req}}</p>
-                                            <p>タスク依頼先：{{des}}</p>
-                                        </ul>
-                                    </div>
+                            <div id="user{{../id}}_collapse_{{title}}" class="collapse"
+                                aria-labelledby="user{{../id}}_task_{{title}}" data-parent="#user{{../id}}_all_task">
+                                <div class="card-body">
+                                    テスト{{../id}}
+                                    <ul>
+                                        <p>タスク名：{{title}}</p>
+                                        <p>タスク期限：{{unixtimeToDate date 'YYYY年 M月D日 HH24:MI:SS'}}</p>
+                                        <p>タスク依頼者：{{req}}</p>
+                                        <p>タスク依頼先：{{des}}</p>
+                                        <p>タスク情報：{{info}}</p>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
-        {{#if (evenNumberChecker id)}}
-                  
-
-                    </div>
-                {{else}}
-        
-                {{/if}}
-
-
+                    {{/if}}
                 {{/each}}
-                </ul>
+                </div>
             </div>
+        {{#if (evenNumberChecker id)}}
         </div>
+        {{/if}}
+        {{/each}}
     </div>
+</div>
+
+{{!-- taskに関する追加style --}}
+<link rel="stylesheet" href="/stylesheets/task_style.css" />
