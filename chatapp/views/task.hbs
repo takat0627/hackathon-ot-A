@@ -2,6 +2,7 @@
     <div class="row">
         <h1>全プロジェクトタスク一覧ページ</h1>
     </div>
+<<<<<<< HEAD
     <div class="row">
        <div id='task'>
         {{#each task}}
@@ -9,7 +10,63 @@
         {{~/each}}
        </div>
     </div>
+=======
+        {{#each task}}
+        {{!-- <div class="col mini_task" id="user{{id}}"> --}}
+        {{#if (evenNumberChecker id)}}
+        {{else}}
+            <div class="row">
+        {{/if}}
+                    <div class="col mini_task" id="user{{id}}">
+                        <div class="accordion" id="user{{id}}_all_task">
+                            {{#if bool}}
+                            <div class="card text-white bg-primary mb-3">
+                        　　　{{else}}
+                            <div class="card text-white bg-danger mb-3">
+                            {{/if}}
+                            
+                                <div class="card-header" id="user{{id}}_task_{{info}}">
+                                    <h5 class="mb-0">
+                                        <label>タスク名：{{title}}</label>
+                                        <button class="btn btn-light collapsed　btn-secondary" type="button" data-toggle="collapse"
+                                            data-target="#user{{id}}_collapse_{{info}}" aria-expanded="false"
+                                            aria-controls="user{{id}}_collapse_{{info}}">
+                                            {{#if bool}}
+                                            <p>タスク完成：{{bool}}</p>
+                                            {{else}}
+                                            <p>タスク未完成：{{bool}}</p>
+                                            {{/if}}
+                                        </button>
+                                    </h5>
+                                </div>
 
-</div>
+                                <div id="user{{id}}_collapse_{{info}}" class="collapse" aria-labelledby="user{{id}}_task_{{info}}"
+                                    data-parent="#user{{id}}_all_task">
+                                    <div class="card-body">
+                                        テスト{{id}}
+                                        <ul>
+                                            <p>タスク名：{{info}}</p>
+                                            <p>タスク期限：{{date}}</p>
+                                            <p>タスク依頼者：{{req}}</p>
+                                            <p>タスク依頼先：{{des}}</p>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        {{#if (evenNumberChecker id)}}
+                  
 
-<script src="/javascripts/index.js"></script>
+                    </div>
+                {{else}}
+        
+                {{/if}}
+>>>>>>> 0af56f3ec72757543e8a4e56a577b18e8d07a4ba
+
+
+                {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
