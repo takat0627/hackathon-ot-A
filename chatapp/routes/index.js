@@ -91,7 +91,7 @@ router.get('/task', function (request, response, next){
     })
 });
 
-// 全体タスクのサンプルに対するget
+// （共有用）全体タスクのサンプルに対するget（ひとまず直接URL叩くと見れるようにする）
 router.get('/task_sample', function (request, response, next){
     response.render('samples/task_sample');
 });
