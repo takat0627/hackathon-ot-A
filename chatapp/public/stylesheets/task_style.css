@@ -3,9 +3,14 @@
  * レスポンシブとか一切考えていません．
  */
 
- /* とりあえず全体の中で初期化したいもの */
- div {
+/* とりあえず全体の中で初期化したいもの */
+div {
     margin: initial;
+}
+
+.card {
+    margin: 1px;
+    background-color: skyblue;
 }
 
 .card-body {
@@ -16,50 +21,146 @@
     margin: initial;
 }
 
-/* 文字の色とか変えたくない？ */
-.collapsed {
-    /* color: rgb(230, 236, 238); */
-    color:rgb(226, 127, 13);
+/* 大元のtag */
+.wrapper {
+    display: flex;
+    width: 100%;
 }
 
-/* accordionのカードの色を指定している */
-.card-header{
-    background-color:white;
-}
+/*
+    main関連
+*/
 
 /* 各ユーザカラムのマージンを決めたい */
 .mini_task{
     margin: 1%;
 }
 
-/* サイドバー関連 今は適当*/
-#sidebar{
-    font-size: 1rem;
-    padding: 1%;
-    
-    min-height: 100vh;
-    background-color: gainsboro;
-}
-
-#sidebar_contents{
-    text-align: center;
-}
-
-#sidebar_contents ul{
-    padding: 0;
-    list-style: none;
-}
-
-#sidebar_contents li {
-    margin-top: 3em;
-}
-
-#main {
-    margin: 3em;
-}
-
 /* 今はただのh1に対して当てている */
 #all_task_title {
     text-align:center;
-    text-decoration: underline burlywood;
+}
+
+
+.card-header .btn{
+    width: 200px;
+}
+
+main {
+    margin: 0 auto;
+}
+
+#contents {
+    padding-top: 3em;
+}
+
+
+
+
+
+
+/* 
+    サイドバーに対するCSS
+*/
+
+aside {
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background-color: gainsboro;
+    color:black;
+    padding: 1%;
+    font-size: 1rem;
+}
+
+#sidebar{
+    padding: 1%;
+    font-size: 1rem;
+}
+
+.menu_list {
+    border-bottom: 1px solid #c4c4c4;
+}
+
+/* ボタンのサイズは統一した方がきれい */
+.active_menu .btn {
+    width: 125px;
+}
+
+
+#sidebar.active_menu {
+    margin-left: -200px;
+}
+
+
+.active_menu{
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.user_img{
+    padding-bottom: 1em;
+}
+
+/* @media (max-width: 700px) {
+    #sidebar {
+        margin-left: 0px;
+        margin: ini;
+    }
+    #sidebar.active_menu {
+        margin-left: 0;
+    }
+
+} */
+
+.open,
+.close {
+    display: none;
+}
+.open {
+    background-color: blueviolet;
+}
+
+input[type="checkbox"] {
+    position: absolute;
+    left: -50vw;
+}
+
+/* ちょこっと先にレスポンシブに */
+@media screen and (max-width: 1000px) {
+    main {
+        width: 100%;
+        padding: 50px;
+    }
+    .open,
+    .close {
+        display: block;
+    }
+    .open {
+        position: absolute;
+    }
+    aside {
+        position: absolute;
+        left: -200px;
+        height: 100%;
+        transition: all 0.2s;
+        /* background: #ffffff; */
+    }
+    input[type="checkbox"]:checked ~ aside {
+        left: 0;
+    }
+    input[type="checkbox"]:checked ~ .wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8) !important;
+    }
+
+    /* taskの */
+    .task_row{
+        all: initial;
+    }
 }

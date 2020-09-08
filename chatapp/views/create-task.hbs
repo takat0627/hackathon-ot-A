@@ -1,5 +1,5 @@
 <div class="container">
-    <h3 class=" text-center">allMessage</h3>
+    <h3 class=" text-center">Create-task</h3>
     <div class="box">
         <div class="inbox">
             <form method="post" action="/">
@@ -26,33 +26,41 @@
                             <a href="/task" class="btn btn-raised btn-success">全体タスク</a>
                         </div>
                         <div class="menu_list active_menu text-center">
-                            <button type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                            <button type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm"><i
+                                    class="fas fa-plus"></i></button>
                         </div>
                         <div class="menu_list active_menu text-center">
                             <a href="/" class="btn btn-raised btn-danger">ログアウト</a>
                         </div>
                     </div>
                 </div>
-                <div class="mesgs">
-                    <div class="msg_history" id="msg_history">
-                        <!-- DOM -->
-                    </div>
+                <div class="create_task">
+                    <form>
+                        <div class="form-group .bmd-form-group">
+                            <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
+                            <label for="formGroupExampleInput" class="bmd-label-floating">タスク名</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput">
+                        </div>
+                        <div class="form-group .bmd-form-group">
+                            <!-- manually specified -->
+                            <label for="formGroupExampleInput2" class="bmd-label-floating">依頼者名</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2">
+                        </div>
+                        <div class="form-group .bmd-form-group">
+                            <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
+                            <label for="formGroupExampleInput3" class="bmd-label-floating">依頼先</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput3">
+                        </div>
+                        <div class="form-group .bmd-form-group">
+                            <!-- manually specified -->
+                            <label for="formGroupExampleInput4" class="bmd-label-floating">希望達成期限</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput4">
+                        </div>
+                         <div class="text-center">
+                            <a href="/task" class="btn btn-raised btn-primary">タスク依頼を送る</a>
+                        </div>
+                    </form>
 
-                    <div class="type_msg row">
-                        <div class="input_msg_write col-10">
-                            <input type="text" class="write_msg" id="message" placeholder="Type a message" />
-                            <button class="msg_send_btn" type="button" value="投稿" onclick="publish()">
-                                <i class="fas fa-paper-plane" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="col-2">
-                            <a href="/create-task" class="btn btn-raised btn-success ">
-                                <i class="fas fa-file"></i>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </form>
         </div>
