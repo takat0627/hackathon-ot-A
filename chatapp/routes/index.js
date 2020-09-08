@@ -14,6 +14,7 @@ router.get('/', function(request, response, next) {
     // response.end();
 });
 
+
 // 個人タスク一覧画面(ログイン時のみ)
 router.post('/user', function(request, response, next) {
     const db = new sqlite3.Database('./db/user.db');
@@ -94,6 +95,13 @@ router.get('/task', function (request, response, next){
 // （共有用）全体タスクのサンプルに対するget（ひとまず直接URL叩くと見れるようにする）
 router.get('/task_sample', function (request, response, next){
     response.render('samples/task_sample');
+});
+
+
+// タスク作成画面の表示
+router.get('/create-task', function (request, response, next){
+    // requestからユーザー情報を取得する
+    response.render('create-task', { userName: request.session.username });
 });
 
 

@@ -1,7 +1,11 @@
 'use strict';
 
 // 最後に投稿したユーザー
-let lastUser = '';
+let lastUser = ''
+
+// 受信投稿メッセージ識別(id)のためのカウント変数
+let count=0;
+
 
 module.exports = function (socket, io) {
     // 投稿メッセージを送信する
@@ -20,11 +24,11 @@ module.exports = function (socket, io) {
         let dt = new Date();
         data.dtFormat  = dt.toFormat('DDD MMM DD YYYY HH24:MI:SS');
 
+        data.id=count;
+        count++;
+
         // 最終投稿ユーザー
         console.log('最終投稿ユーザー: '+ lastUser);
-
-        // 最終投稿ユーザーと現在のユーザーが一致しない場合に投稿
-        if (lastUser !== data.userName) {
             console.log('client\'s name: ' + data.userName);
             console.log('client\'s message: ' + data.message);
             console.log('sucess!\n')
@@ -32,7 +36,6 @@ module.exports = function (socket, io) {
             io.sockets.emit('publishMessageEvent', data);
             // 最終投稿ユーザーを更新
             lastUser = data.userName;
-        }
-
+        
     });
 };
