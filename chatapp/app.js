@@ -13,8 +13,29 @@ const routes = require('./routes/index');
 const app = express();
 
 // view engine setup
+// habdlebars関連
+let expressHbs =  require('express-handlebars');
+let hbs = expressHbs.create({});
+
+app.engine('.hbs', expressHbs({ defaultLayout: 'layout', layoutsDir: 'views', extname: '.hbs' }));
 app.set('views', path.join(__dirname, 'views'));
+
 app.set('view engine', 'hbs');
+
+// habdlebars関連の関数
+// 入力値が偶数かどうかの真偽値を返す
+hbs.handlebars.registerHelper('evenNumberChecker', function(num) {
+  return num % 2 === 0;
+});
+// unixtime時間を Dateクラスへ流してそれをformatに従って変換する
+hbs.handlebars.registerHelper('unixtimeToDate', function(unixtime, format) {
+  return (new Date(unixtime).toFormat(format));
+});
+// 二つの値が等しいかどうかの真偽値を返す
+hbs.handlebars.registerHelper('isEquals', function(num1, num2) {
+  return num1===num2;
+});
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
