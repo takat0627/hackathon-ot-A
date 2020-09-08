@@ -72,7 +72,11 @@ router.get('/room', function (request, response, next){
 
 // 全体たすく画面の表示
 router.get('/task', function (request, response, next){
-
+    if(request.session.username === undefined){
+        response.redirect('/');
+        console.log('session out')
+        return
+    }
     // const db = new sqlite3.Database('./db/masaya_sample');
     const db = new sqlite3.Database('./db/multi-samples.db');
 
@@ -103,19 +107,43 @@ router.get('/task', function (request, response, next){
             userName : request.session.username,
             user : []
         };
-        // allをeach順通りに実行するにはserializeが中に必須！
-        db.each(`SELECT rowid AS id, info FROM user`, function(err, row) {
-            db.serialize(function() {
-                db.all(`SELECT req, des, date, title, info, bool FROM task WHERE ${row.id}=req`, function(err, rows_task) {
-                    data['user'].push({
-                        id : row.id , 
-                        task : rows_task
-                    });
-                    // この条件でかならずpushされてから送れる！
-                    if (data['user'].length===15){
-                        console.log(data)
-                        resolve_getdata(data);
+
+        db.serialize(function() {
+            // 完全にpushしてから終了するためにここでユーザ名を取得しておく．
+            let userNum = 0;
+            db.get('SELECT count(rowid) AS num FROM user', function(err, row){
+                userNum = row.num;       
+                console.log('user num :', userNum);
+            });
+            // allをeach順通りに実行するにはserializeが中に必須！
+            db.each(`SELECT rowid AS id, info FROM user`, function(err, row) {
+                db.serialize(function() {
+                    /*
+                    （修正）
+                    ここではタスクを受けてる一覧なのでdesにあるかどうか確認
+                    期限順(unixtime)が短い順（昇順）に並び替える 
+                    => が！
+                    req, des, date, title, info, bool */
+                    
+                    db.all(`SELECT * FROM task WHERE ${row.id}=des ORDER BY date ASC`, function(err, rows_task) {
+                        let hasTask = true;
+                        // 空の時は持っているタスクがないのでそれに関するflagを渡しておくことでhandlbardsで簡単に認識できるようにする．
+                        if(rows_task.length === 0){
+                            hasTask = false;
                         }
+
+                        data['user'].push({
+                            id : row.id , 
+                            task : rows_task,
+                            hasTask : hasTask
+                        });
+
+                        // この条件でかならずpushされてから送れる！
+                        if (data['user'].length===userNum){
+                            console.log(data)
+                            resolve_getdata(data);
+                        }
+                    });
                 });
             });
         });

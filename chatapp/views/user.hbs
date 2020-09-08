@@ -1,29 +1,65 @@
-<div class="container content">
-    <div class="row">
-        <h1>{{ userName }}さんの個人タスク一覧ページ</h1>
-    </div>
-    <nav>
-        {{!-- チャット画面へ入室 --}}
-        <div>
-            <button onclick="enter();"  class="common-button index-enter_button">チャットに入室</button>
-        </div>
-        {{!-- 全体タスク画面へページ遷移 --}}＿
-        <div>
-            <a href="/task" class="btn" >全体タスク画面へ</a>
-        </div>
-        {{!-- ログアウト --}}
-        <div>
-            <a href="/" class="btn" >ログアウト</a>
-        </div>
-    </nav>
+<div class='wrapper'>
+    {{!-- 制御用 --}}
+    <input id="menu" type="checkbox"/>
+    <label for="menu" class="open" style="font-size: large;">ここ押したら開く</label>
+    <label for="menu" class="back"></label>
 
-    <div class="row main">
-       <div id='name'>
-           <h2>ようこそ、{{ userName }}さん！</h2>
-           <h3>以下、個人のタスクが列挙されます</h3>
-       </div>
+    {{!-- サイドバー関連 --}}
+    <aside>
+        <label for="menu" class="close">×</label>
+        <div class='sidebar text-center' id="sidebar">
+            <div class="sidebar-header">
+                <div class="user_img"> 
+                    <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" width="100" height="100">
+                </div>
+                <div class="user_ib text-center">
+                    <div class='mb-3'>
+                        <p>ユーザー名</p>
+                        <p>{{ userName }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class='components text-center'>
+                <div class="sidebar-item active_menu">
+                    <a href="/user" class="btn btn-raised btn-info">個人タスク</a>
+                </div>
+                <div class="sidebar-item active_menu">
+                    <a href="/room" class="btn btn-raised btn-success">全体チャット</a>
+                </div>
+                <div class="sidebar-item active_menu">
+                    <a href="/" class="btn btn-raised btn-danger">ログアウト</a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <div id="contents">
+            <h1>{{ userName }}さんの個人タスク一覧ページ（簡易レスポンシブ済み）</h1>
+        </div>
+        <nav>
+            {{!-- チャット画面へ入室 --}}
+            <div>
+                <button onclick="enter();"  class="common-button index-enter_button">チャットに入室</button>
+            </div>
+            {{!-- 全体タスク画面へページ遷移 --}}＿
+            <div>
+                <a href="/task" class="btn" >全体タスク画面へ</a>
+            </div>
+            {{!-- ログアウト --}}
+            <div>
+                <a href="/" class="btn" >ログアウト</a>
+            </div>
+        </nav>
+
+        <div class="row main">
+        <div id='name'>
+            <h2>ようこそ、{{ userName }}さん！</h2>
+            <h3>以下、個人のタスクが列挙されます</h3>
+        </div>
+        </div>
     </div>
+    </main>
 </div>
-
-<script src="/javascripts/socket.js"></script>
-<script src="/javascripts/enter.js"></script>
+{{!-- taskに関する追加style --}}
+<link rel="stylesheet" href="/stylesheets/task_style.css" />
