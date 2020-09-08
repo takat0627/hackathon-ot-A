@@ -1,62 +1,119 @@
-<div class="container">
-    <div class="row">
-        <h1>全プロジェクトタスク一覧ページ</h1>
-    </div>
-        {{#each task}}
-        {{!-- <div class="col mini_task" id="user{{id}}"> --}}
-        {{#if (evenNumberChecker id)}}
-        {{else}}
-            <div class="row">
-        {{/if}}
-                    <div class="col mini_task" id="user{{id}}">
-                        <div class="accordion" id="user{{id}}_all_task">
-                            {{#if bool}}
-                            <div class="card text-white bg-primary mb-3">
-                        　　　{{else}}
-                            <div class="card text-white bg-danger mb-3">
-                            {{/if}}
-                            
-                                <div class="card-header" id="user{{id}}_task_{{info}}">
-                                    <h5 class="mb-0">
-                                        <label>タスク名：{{title}}</label>
-                                        <button class="btn btn-light collapsed　btn-secondary" type="button" data-toggle="collapse"
-                                            data-target="#user{{id}}_collapse_{{info}}" aria-expanded="false"
-                                            aria-controls="user{{id}}_collapse_{{info}}">
-                                            {{#if bool}}
-                                            <p>タスク完成：{{bool}}</p>
-                                            {{else}}
-                                            <p>タスク未完成：{{bool}}</p>
-                                            {{/if}}
-                                        </button>
-                                    </h5>
-                                </div>
+{{!-- <div class='container'> --}}
+<div class='wrapper'>
+    {{!-- 制御用 --}}
+    <input id="menu" type="checkbox"/>
+    <label for="menu" class="open" style="font-size: large;">ここ押したら開く</label>
+    <label for="menu" class="back"></label>
 
-                                <div id="user{{id}}_collapse_{{info}}" class="collapse" aria-labelledby="user{{id}}_task_{{info}}"
-                                    data-parent="#user{{id}}_all_task">
-                                    <div class="card-body">
-                                        テスト{{id}}
-                                        <ul>
-                                            <p>タスク名：{{info}}</p>
-                                            <p>タスク期限：{{date}}</p>
-                                            <p>タスク依頼者：{{req}}</p>
-                                            <p>タスク依頼先：{{des}}</p>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    {{!-- サイドバー関連 --}}
+    <aside>
+        <label for="menu" class="close">×</label>
+        <div class='sidebar text-center' id="sidebar">
+            <div class="sidebar-header menu_list">
+                <div class="user_img"> 
+                    <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" width="100" height="100">
+                </div>
+                <div class="user_ib text-center">
+                    <div class='mb-3'>
+                        <p>ユーザー名</p>
+                        <p>{{ userName }}</p>
                     </div>
-        {{#if (evenNumberChecker id)}}
-                  
-
-                    </div>
-                {{else}}
-        
-                {{/if}}
-
-
-                {{/each}}
-                </ul>
+                </div>
+            </div>
+            <div class='components text-center'>
+                <div class="sidebar-item active_menu menu_list">
+                    <a href="/user" class="btn btn-raised btn-info">個人タスク</a>
+                </div>
+                <div class="sidebar-item active_menu menu_list">
+                    <a href="/room" class="btn btn-raised btn-success">全体チャット</a>
+                </div>
+                <div class="sidebar-item active_menu menu_list">
+                    <a href="/" class="btn btn-raised btn-danger">ログアウト</a>
+                </div>
             </div>
         </div>
-    </div>
+    </aside>
+
+    <main>
+        <div id="contents">
+            <h1 id='all_task_title'>全プロジェクトタスク一覧ページ（簡易レスポンシブ済み）</h1>
+            {{!-- ひとまずユーザで回す --}}
+            {{#each user}}
+            {{#if (evenNumberChecker id)}}
+            {{else}}
+            <div class="row task_row">
+            {{/if}}
+                <div class="col mini_task" id="user{{id}}">
+                    <label style="font-size: large;">ユーザ{{id}}</label>
+                    <div class="accordion" id="user{{id}}_all_task">
+                        {{!-- タスクを持っているかどうか，持っていなければ何もないというカードを発行する --}}
+                        {{#unless hasTask}}
+                        <div class="card text-white">
+                            <div class="card-header" id="user{{ id }}_no_task">
+                                <h5 class="mb-0 text-center">
+                                    <label>進行中のタスクはありません．</label>
+                                </h5>
+                            </div>
+                        </div>
+
+
+                        {{!-- タスクを持っている時の処理 --}}
+                        {{else}}
+                            {{!-- 階層になっていることに注意！task配下ではuser直下のidを参照するには../が必要 --}}
+                            {{#each task}}
+                                {{#if done}}
+                                    <div class="card text-white bg-primary">
+                                {{else}}
+                                    <div class="card text-white bg-danger">
+                                {{/if}}
+                                        <div class="card-header" id="user{{../id}}_task_{{title}}">
+                                            <h5 class="mb-0">
+                                                <div class="row">
+                                                    <div class='col-6 text-center'>
+                                                    タスク名：{{title}}
+                                                    </div>
+                                                    <div class='col-4'>
+                                                        <button class="btn btn-light collapsed　btn-secondary" type="button"
+                                                            data-toggle="collapse" data-target="#user{{../id}}_collapse_{{title}}"
+                                                            aria-expanded="false" aria-controls="user{{../id}}_collapse_{{title}}">
+                                                            <p>
+                                                                {{#if done}}
+                                                                タスク完成：{{done}}
+                                                                {{else}}
+                                                                タスク未完成：{{done}}
+                                                                {{/if}}
+                                                            </p>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </h5>
+                                        </div>
+
+                                        <div id="user{{../id}}_collapse_{{title}}" class="collapse"
+                                            aria-labelledby="user{{../id}}_task_{{title}}" data-parent="#user{{../id}}_all_task">
+                                            <div class="card-body">
+                                                <p>ユーザ{{../id}}のタスク</p>
+                                                
+                                                <ul>
+                                                    <p>タスク名：{{title}}</p>
+                                                    <p>タスク期限：{{unixtimeToDate date 'YYYY年 M月D日 HH24:MI:SS'}}</p>
+                                                    <p>タスク依頼者：{{req}}</p>
+                                                    <p>タスク依頼先：{{des}}</p>
+                                                    <p>タスク情報：{{info}}</p>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                            {{/each}}
+                    {{/unless}}
+                    </div>
+                </div>
+            {{#if (evenNumberChecker id)}}
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+    </main>
+</div>
+{{!-- taskに関する追加style --}}
+<link rel="stylesheet" href="/stylesheets/task_style.css" />
