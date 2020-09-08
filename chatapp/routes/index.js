@@ -4,6 +4,8 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const { render } = require('../app');
 const router = express.Router();
+require('date-utils');
+
 
 // ログイン画面の表示
 router.get('/', function(request, response, next) {
