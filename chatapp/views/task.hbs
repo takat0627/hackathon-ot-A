@@ -21,7 +21,7 @@
 
     <div class="col" id="main">
         <h1 id='all_task_title'>全プロジェクトタスク一覧ページ</h1>
-            {{!-- ひとまずユーザで回す --}}
+        {{!-- ひとまずユーザで回す --}}
         {{#each user}}
         {{#if (evenNumberChecker id)}}
         {{else}}
@@ -32,7 +32,8 @@
                 <div class="accordion" id="user{{id}}_all_task">
                 {{!-- 階層になっていることに注意！task配下ではuser直下のidを参照するには../が必要 --}}
                 {{#each task}}
-                    {{#if (isEquals ../id req)}}
+                    {{!-- 階層的にする前は下記の方法で"idが一致する"で制御しようと思っていました．なくても結果は同じです --}}
+                    {{!-- {{#if (isEquals ../id req)}} --}}
                     {{#if bool}}
                         {{!-- <div class="card"> --}}
                         <div class="card text-white bg-primary">
@@ -71,7 +72,7 @@
                                 </div>
                             </div>
                         </div>
-                    {{/if}}
+                    {{!-- {{/if}} --}}
                 {{/each}}
                 </div>
             </div>
