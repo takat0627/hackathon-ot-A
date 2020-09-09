@@ -217,13 +217,14 @@ router.post('/create-task', function (request, response, next) {
         let date = request.body.date;
         let dateNum = Number(date.split('-')[0]+date.split('-')[1]+date.split('-')[2]);
 
+        // response.send(dateNum);
+
         const db = new sqlite3.Database('./db/test.db');
         db.run('CREATE TABLE IF NOT EXISTS task (id INTEGER primary key,req INTEGER,des INTEGER,date INTEGER, title TEXT, info TEXT, done INTEGER)');
-        db.run(`INSERT INTO task(req,des,date,title,info,done) VALUES (${request.body.req},${request.session.userid},${dateNum},'${request.body.title}','${request.body.info}',0);`);
-
-        response.redirect('/user');
-        db.close();
-        
+        db.run(`INSERT INTO task(req,des,date,title,info,done) VALUES (${request.body.req},${request.session.userid},${dateNum},'${request.body.title}','${request.body.info}',0);`, function(err, res){
+            response.redirect('/user');
+            db.close();
+        });
 });
 
 module.exports = router;
