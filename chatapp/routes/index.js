@@ -2,14 +2,15 @@
 
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
+const userController = require('../controller/userController');
 const { render } = require('../app');
+const { loginByName } = require('../controller/userController');
 const router = express.Router();
 require('date-utils');
 
-
 // ログイン画面の表示
-router.get('/', function(request, response, next) {
-    var session = request.session;
+router.get('/', function (request, response, next) {
+    let session = request.session;
     // セッション中のユーザーをリセット
     request.session.username = null;
     response.render('index');
@@ -18,48 +19,7 @@ router.get('/', function(request, response, next) {
 
 
 // 個人タスク一覧画面(ログイン時のみ)
-router.post('/user', function(request, response, next) {
-    const db = new sqlite3.Database('./db/user.db');
-
-    db.serialize(function () {
-        // テーブルがなければ作成
-        db.run(
-            `CREATE TABLE IF NOT EXISTS user (
-                name TEXT
-            )`
-        );
-
-        let create = new Promise(function (resolve, reject) {
-            // 名前を取得している
-            db.get(`SELECT name FROM user WHERE name = '${request.body.userName}'`, function (err, row) {
-                let user_exists = false;
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    if (row !== undefined) {
-                        request.session.username = row.name;
-                        response.redirect('/user');
-                        user_exists = true;
-                    }
-                    resolve(user_exists);
-                }
-            });
-        });
-
-        create.then(function (user_exists) {
-            if (!user_exists) {
-                // prepare Statementでデータ挿入
-                let stmt = db.prepare(`INSERT INTO user VALUES (?)`);
-                stmt.run([request.body.userName]);
-                stmt.finalize();
-                request.session.username = request.body.userName;
-                response.redirect('/user');
-            }
-            db.close();
-        });
-    });
-});
+router.post('/user', loginByName);
 
 // チャット退出後→個人一覧画面(データベースで情報取得の必要性がないためGET)
 router.get('/user', function (request, response, next){
