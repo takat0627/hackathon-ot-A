@@ -1,8 +1,6 @@
 'use strict';
 
 const express = require('express');
-const { render } = require('../app');
-const router = express.Router();
 const sqlite3 = require('sqlite3').verbose();
 const { render } = require('../app');
 const router = express.Router();
@@ -91,7 +89,7 @@ router.get('/task', function (request, response, next){
 
     // タスク情報取得後に全体タスク画面にrender
     let getdata = new Promise(function (resolve_getdata, reject) {
-        /* 
+        /*
             送る形式が以下のようになればいけるようになった．特にhbsのために階層的にする必要がある
             RDBでこうゆうのすぐに引っ張ってこれるのでしょうか？
             data = {
@@ -121,7 +119,7 @@ router.get('/task', function (request, response, next){
             // 完全にpushしてから終了するためにここでユーザ名を取得しておく．
             let userNum = 0;
             db.get('SELECT count(rowid) AS num FROM user', function(err, row){
-                userNum = row.num;       
+                userNum = row.num;
                 console.log('user num :', userNum);
             });
             // allをeach順通りに実行するにはserializeが中に必須！
@@ -130,10 +128,10 @@ router.get('/task', function (request, response, next){
                     /*
                     （修正）
                     ここではタスクを受けてる一覧なのでdesにあるかどうか確認
-                    期限順(unixtime)が短い順（昇順）に並び替える 
+                    期限順(unixtime)が短い順（昇順）に並び替える
                     => が！
                     req, des, date, title, info, bool */
-                    
+
                     db.all(`SELECT * FROM task WHERE ${row.id}=des ORDER BY date ASC`, function(err, rows_task) {
                         let hasTask = true;
                         // 空の時は持っているタスクがないのでそれに関するflagを渡しておくことでhandlbardsで簡単に認識できるようにする．
@@ -142,7 +140,7 @@ router.get('/task', function (request, response, next){
                         }
 
                         data['user'].push({
-                            id : row.id , 
+                            id : row.id ,
                             task : rows_task,
                             hasTask : hasTask
                         });
