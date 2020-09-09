@@ -21,22 +21,24 @@ router.get('/', function(request, response, next) {
 // 個人タスク一覧画面(ログイン時のみ)
 router.post('/user', function(request, response, next) {
 
-    // lastID
+    // lastID(最後に追加したユーザー)
     let lastID;
 
-    //　暫定user.db(ID+name)
-    const db = new sqlite3.Database('./db/user.db');
+    //　test用データベース
+    const db = new sqlite3.Database('./db/test.db');
 
     db.serialize(function () {
+
         // テーブルがなければ作成
         db.run(`CREATE TABLE IF NOT EXISTS user ( id INTEGER primary key , name TEXT )`);
 
+        // 最後に追加したユーザーのIDを取得
         db.get('SELECT MAX(id) FROM user', function(err,res){
             lastID = res['MAX(id)'];
         });
 
         let create = new Promise(function (resolve, reject) {
-            // ID・名前を取得している
+            // ID・名前を取得している(IDはPrimary Keyで自動取得)
             db.get(`SELECT id, name FROM user WHERE name = '${request.body.userName}'`, function (err, row) {
                 let user_exists = false;
                 if (err) {
@@ -60,6 +62,7 @@ router.post('/user', function(request, response, next) {
                 let stmt = db.prepare(`INSERT INTO user(name) VALUES (?)`);
                 stmt.run([request.body.userName]);
                 stmt.finalize();
+                // 最後に取得したユーザーのIDに1を加えると,新登録ユーザーのIDを取得
                 request.session.userid  = lastID+1;
                 request.session.username = request.body.userName;
                 response.redirect('/user');
@@ -92,7 +95,7 @@ router.get('/task', function (request, response, next){
         console.log('session out')
         return
     }
-    // const db = new sqlite3.Database('./db/masaya_sample');
+  
     const db = new sqlite3.Database('./db/multi-samples.db');
 
     // タスク情報取得後に全体タスク画面にrender
@@ -184,9 +187,10 @@ router.get('/create-task', function (request, response, next){
 
     let userData;
     //　暫定user.db(ID+name)
-    const db = new sqlite3.Database('./db/user.db');
+    const db = new sqlite3.Database('./db/test.db');
 
          // 自分以外の全ユーザーを取得
+         // 依頼先を送信するときに必要なリスト
          db.all(`SELECT id, name FROM user WHERE NOT name = '${request.session.username}'`, function (err, user_data) {
             if (err) {
                console.log(err);
@@ -194,9 +198,8 @@ router.get('/create-task', function (request, response, next){
             else {
                 // 自分以外のユーザーが存在する時
                 if (user_data !== undefined) {
-                    //デバッグ
-                    //response.send(user_data);
                     userData = {
+                        userName: request.session.username,
                         user: user_data
                     }
                     response.render('create-task', userData);
@@ -209,10 +212,12 @@ router.get('/create-task', function (request, response, next){
 // タスク作成
 router.post('/create-task', function (request, response, next) {
 
+        // DOMStringを数値化
+        // Bootstrapで実現するときに改変させる必要あり
         let date = request.body.date;
         let dateNum = Number(date.split('-')[0]+date.split('-')[1]+date.split('-')[2]);
 
-        const db = new sqlite3.Database('./db/task2.db');
+        const db = new sqlite3.Database('./db/test.db');
         db.run('CREATE TABLE IF NOT EXISTS task (id INTEGER primary key,req INTEGER,des INTEGER,date INTEGER, title TEXT, info TEXT, done INTEGER)');
         db.run(`INSERT INTO task(req,des,date,title,info,done) VALUES (${request.body.req},${request.session.userid},${dateNum},'${request.body.title}','${request.body.info}',0);`);
 
