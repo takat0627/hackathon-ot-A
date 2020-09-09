@@ -12,6 +12,7 @@ router.get('/', function(request, response, next) {
     var session = request.session;
     // セッション中のユーザーをリセット
     request.session.username = null;
+    request.session.userid = null;
     response.render('index');
     // response.end();
 });
@@ -20,6 +21,9 @@ router.get('/', function(request, response, next) {
 // 個人タスク一覧画面(ログイン時のみ)
 router.post('/user', function(request, response, next) {
 
+    // lastID
+    let lastID;
+
     //　暫定user.db(ID+name)
     const db = new sqlite3.Database('./db/user.db');
 
@@ -27,9 +31,13 @@ router.post('/user', function(request, response, next) {
         // テーブルがなければ作成
         db.run(`CREATE TABLE IF NOT EXISTS user ( id INTEGER primary key , name TEXT )`);
 
+        db.get('SELECT MAX(id) FROM user', function(err,res){
+            lastID = res['MAX(id)'];
+        });
+
         let create = new Promise(function (resolve, reject) {
             // ID・名前を取得している
-            db.get(`SELECT name FROM user WHERE name = '${request.body.userName}'`, function (err, row) {
+            db.get(`SELECT id, name FROM user WHERE name = '${request.body.userName}'`, function (err, row) {
                 let user_exists = false;
                 if (err) {
                     reject(err);
@@ -37,6 +45,7 @@ router.post('/user', function(request, response, next) {
                 else {
                     if (row !== undefined) {
                         request.session.username = row.name;
+                        request.session.userid = row.id;
                         user_exists = true;
                         response.redirect('/user');
                     }
@@ -51,6 +60,7 @@ router.post('/user', function(request, response, next) {
                 let stmt = db.prepare(`INSERT INTO user(name) VALUES (?)`);
                 stmt.run([request.body.userName]);
                 stmt.finalize();
+                request.session.userid  = lastID+1;
                 request.session.username = request.body.userName;
                 response.redirect('/user');
             }
@@ -61,11 +71,11 @@ router.post('/user', function(request, response, next) {
 
 // チャット退出後→個人一覧画面(データベースで情報取得の必要性がないためGET)
 router.get('/user', function (request, response, next){
-    if(request.session.username === undefined){
+    if((request.session.username === undefined) && (request.session.userid === undefined)){
         response.redirect('/');
     }else{
         // requestからユーザー情報を取得する
-        response.render('user', { userName: request.session.username });
+        response.render('user', { userName: request.session.username, id: request.session.userid});
     }
 });
 
@@ -145,7 +155,7 @@ router.get('/task', function (request, response, next){
 
                         // この条件でかならずpushされてから送れる！
                         if (data['user'].length===userNum){
-                            console.log(data)
+                            console.log(data);
                             resolve_getdata(data);
                         }
                     });
@@ -168,8 +178,6 @@ router.get('/task_sample', function (request, response, next){
     
     response.render('samples/task_sample');
 });
-
-
 
 // タスク作成画面の表示
 router.get('/create-task', function (request, response, next){
@@ -201,26 +209,16 @@ router.get('/create-task', function (request, response, next){
 // タスク作成
 router.post('/create-task', function (request, response, next) {
 
-    // let task = { req: 2,//requester
-    //     des: request.body.req, //destination
-    //     date: request.body.datepicker, //will set unixtime
-    //     title: request.body.title,
-    //     info: request.body.info,
-    //     done: 0 // SQLiteにはBOOLEAN型が存在しない
-    // };
         let date = request.body.date;
         let dateNum = Number(date.split('-')[0]+date.split('-')[1]+date.split('-')[2]);
 
         const db = new sqlite3.Database('./db/task2.db');
-        // db.run('CREATE TABLE IF NOT EXISTS task (id INTEGER primary key,req INTEGER, des INTEGER, date INTEGER, title TEXT, info TEXT, done INTEGER)')
-        db.run('CREATE TABLE IF NOT EXISTS task (id INTEGER primary key,req INTEGER, date INTEGER, title TEXT, info TEXT, done INTEGER)')
-        db.run(`INSERT INTO task(req,date,title,info,done) VALUES (${request.body.req},${dateNum},'${request.body.title}','${request.body.info}',0);`);
+        db.run('CREATE TABLE IF NOT EXISTS task (id INTEGER primary key,req INTEGER,des INTEGER,date INTEGER, title TEXT, info TEXT, done INTEGER)');
+        db.run(`INSERT INTO task(req,des,date,title,info,done) VALUES (${request.body.req},${request.session.userid},${dateNum},'${request.body.title}','${request.body.info}',0);`);
 
         response.redirect('/user');
         db.close();
         
 });
-
-
 
 module.exports = router;
