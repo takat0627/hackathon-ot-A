@@ -5,8 +5,6 @@ function create() {
     // 入力されたユーザ名を取得する
     let title = $('#title').val();
     let req = $('#req').val();
-    // let date = $('#datepicker').val();
-    let info = $('#info').val();
 
     // ユーザ名が未入力でないかチェックする
     if ((title === "") || (req === "")) {

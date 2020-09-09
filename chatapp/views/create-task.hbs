@@ -50,6 +50,21 @@
                         </select>
                     </div>
 
+                    <div class="index-task_date">
+                        <label>期限</label>
+                        <input type="date" name="date" id="date" min="2012-01-01" max="2012-12-31">
+                    </div>
+                    <script>
+                        window.onload = function () {
+                            var today = new Date();
+                            today.setDate(today.getDate());
+                            var yyyy = today.getFullYear();
+                            var mm = ("0"+(today.getMonth()+1)).slice(-2);
+                            var dd = ("0"+today.getDate()).slice(-2);
+                            document.getElementById("date").value=yyyy+'-'+mm+'-'+dd;
+                            }                               
+                    </script>
+
                     <div class="index-task_info">
                         <label>メモ</label>
                         <input type="text" id="info" name="info" class="index-user_name_text">
