@@ -2,7 +2,7 @@
     <h3 class=" text-center">Create-task</h3>
     <div class="box">
         <div class="inbox">
-            <form method="post" action="/">
+            {{!-- <form method="post" action="/"> --}}
                 <div class="inbox_menus">
                     <div class="inbox_menu">
                         <div class="menu_list active_menu">
@@ -10,9 +10,11 @@
                                 <div class="user_img"> <img src="https://ptetutorials.com/images/user-profile.png"
                                         alt="sunil"> </div>
                                 <div class="user_ib">
+                                    <div class="user_ib">
                                     <h5>User：{{userName}}
                                         <input id="userName" value={{userName}} type="hidden" value="">
                                     </h5>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -34,41 +36,100 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="create_task">
-                    <form>
-                        <div class="form-group .bmd-form-group">
+
+                    <form method="post" action="/create-task">
+
+                    <div class="index-task_title">
+                        <label>タスク名</label>
+                        <input type="text" id="title" name="title" class="index-user_name_text">
+                    </div>
+
+                    <div class="index-task_req">
+                        <select name="req" id="req">
+                            {{#each user}}
+                                <option value={{id}}>{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+
+                    <div class="index-task_date">
+                        <label>期限</label>
+                        <input type="date" name="date" id="date" min="2012-01-01" max="2012-12-31">
+                    </div>
+                    <script>
+                        window.onload = function () {
+                            var today = new Date();
+                            today.setDate(today.getDate());
+                            var yyyy = today.getFullYear();
+                            var mm = ("0"+(today.getMonth()+1)).slice(-2);
+                            var dd = ("0"+today.getDate()).slice(-2);
+                            document.getElementById("date").value=yyyy+'-'+mm+'-'+dd;
+                            }                               
+                    </script>
+
+                    <div class="index-task_info">
+                        <label>メモ</label>
+                        <input type="text" id="info" name="info" class="index-user_name_text">
+                    </div>
+
+                        {{!-- <div class="form-group .bmd-form-group">
                             <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
                             <label for="formGroupExampleInput" class="bmd-label-floating">タスク名</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput">
+                            <input type="text" class="form-control" id="title">
                         </div>
+
                         <div class="form-group .bmd-form-group">
-                            <!-- manually specified -->
-                            <label for="formGroupExampleInput2" class="bmd-label-floating">依頼者名</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2">
-                        </div>
-                        <div class="form-group .bmd-form-group">
+                            <label for="custom-select-1c">依頼先</label>
+                            <select id="req" class="custom-select custom-select-lg">
+                                {{#each user}}
+                                    <option value={{id}}>{{name}}</option>
+                                {{/each }}
+                            </select>
+                        </div> --}}
+
+                        {{!-- DatePocker関連 srcはlayoutに記述しました --}}
+                        {{!-- https://gijgo.com/datepicker/example/bootstrap --}}
+                        {{!-- <div class="form-group .bmd-form-group">
+                            <label for="datepicker">期日</label>
+                            <input id="datepicker" />
+                            <script>
+                                //$('#datepicker').datepicker({
+                                    uiLibrary: 'bootstrap'
+                                });
+                            </script>
+                        </div> --}}
+                        {{!-- <div class="form-group .bmd-form-group"></div>
+                            <label >日付</label>
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div> --}}
+
+                        {{!-- <div class="form-group .bmd-form-group">
                             <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
-                            <label for="formGroupExampleInput3" class="bmd-label-floating">依頼先</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput3">
+                            <label for="formGroupExampleInput" class="bmd-label-floating">メモ</label>
+                            <input type="text" class="form-control" id="info">
+                        </div> --}}
+
+                         {{!-- <div class="text-center index-enter">
+                            <input type="submit" value="タスク追加" class="common-button index-enter_button" onclick="create()"> 
                         </div>
-                        <div class="form-group .bmd-form-group">
-                            <!-- manually specified -->
-                            <label for="formGroupExampleInput4" class="bmd-label-floating">希望達成期限</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput4">
-                        </div>
-                         <div class="text-center">
-                            <a href="/task" class="btn btn-raised btn-primary">タスク依頼を送る</a>
+
+                    </form> --}}
+                                
+                        <div class='index-enter'>
+                            <input type="button" value="タスク追加" class="common-button index-enter_button" onclick="create()"/>
                         </div>
                     </form>
 
                 </div>
-            </form>
+            {{!-- </form> --}}
         </div>
-    </div>
-
-
-    <p class="text-center top_spac"> rakus-intern-A-team</a></p>
-
-</div>
 </div>
 
+<script src="/javascripts/create.js"></script>

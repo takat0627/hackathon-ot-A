@@ -56,7 +56,7 @@ app.use(session({
   }
 }));
 
-var sessionCheck = function(req, res, next) {
+let sessionCheck = function(req, res, next) {
   if (req.session.user) {
     next();
   } else {
