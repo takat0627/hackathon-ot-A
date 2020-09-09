@@ -35,9 +35,27 @@
 
                 <div class="create_task">
 
-                    <form　method="post" action="/create-task">
+                    <form method="post" action="/create-task">
 
-                        <div class="form-group .bmd-form-group">
+                    <div class="index-task_title">
+                        <label>タスク名</label>
+                        <input type="text" id="title" name="title" class="index-user_name_text">
+                    </div>
+
+                    <div class="index-task_req">
+                        <select name="req" id="req">
+                            {{#each user}}
+                                <option value={{id}}>{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+
+                    <div class="index-task_info">
+                        <label>メモ</label>
+                        <input type="text" id="info" name="info" class="index-user_name_text">
+                    </div>
+
+                        {{!-- <div class="form-group .bmd-form-group">
                             <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
                             <label for="formGroupExampleInput" class="bmd-label-floating">タスク名</label>
                             <input type="text" class="form-control" id="title">
@@ -50,7 +68,7 @@
                                     <option value={{id}}>{{name}}</option>
                                 {{/each }}
                             </select>
-                        </div>
+                        </div> --}}
 
                         {{!-- DatePocker関連 srcはlayoutに記述しました --}}
                         {{!-- https://gijgo.com/datepicker/example/bootstrap --}}
@@ -73,16 +91,21 @@
                             </div>
                         </div> --}}
 
-                        <div class="form-group .bmd-form-group">
+                        {{!-- <div class="form-group .bmd-form-group">
                             <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
                             <label for="formGroupExampleInput" class="bmd-label-floating">メモ</label>
                             <input type="text" class="form-control" id="info">
+                        </div> --}}
+
+                         {{!-- <div class="text-center index-enter">
+                            <input type="submit" value="タスク追加" class="common-button index-enter_button" onclick="create()"> 
                         </div>
 
-                         <div class="text-center index-enter">
-                            <input type="submit" value="タスク追加" class="common-button index-enter_button" onclick="create();"> 
+                    </form> --}}
+                                
+                        <div class='index-enter'>
+                            <input type="button" value="タスク追加" class="common-button index-enter_button" onclick="create()"/>
                         </div>
-
                     </form>
 
                 </div>
@@ -91,11 +114,7 @@
 </div>
 
 
-<script src="/javascripts/socket.js"></script>
-<script src="/javascripts/enter.js"></script>
-<script src="/javascripts/publish.js"></script>
-<script src="/javascripts/memo.js"></script>
-<script src="/javascripts/exit.js"></script>
+<script src="/javascripts/create.js"></script>
 
 <!-- bootstrap-material-design用 -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -120,5 +139,3 @@
         $('#datetimepicker1').datetimepicker();
     });
 </script>
-
-<script src="/javascripts/create.js"></script>

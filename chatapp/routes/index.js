@@ -198,5 +198,31 @@ router.get('/create-task', function (request, response, next){
         });
 });
 
+// タスク作成
+router.post('/create-task', function (request, response, next) {
+
+    // let task = { req: 2,//requester
+    //     des: request.body.req, //destination
+    //     date: request.body.datepicker, //will set unixtime
+    //     title: request.body.title,
+    //     info: request.body.info,
+    //     done: 0 // SQLiteにはBOOLEAN型が存在しない
+    // };
+
+        const db = new sqlite3.Database('./db/task2.db');
+        // db.run('CREATE TABLE IF NOT EXISTS task (id INTEGER primary key,req INTEGER, des INTEGER, date INTEGER, title TEXT, info TEXT, done INTEGER)')
+        db.run('CREATE TABLE IF NOT EXISTS task (id INTEGER primary key,req INTEGER, title TEXT, info TEXT, done INTEGER)')
+        // let stmt = db.prepare('INSERT INTO task VALUES (?, ?, ?, ?, ? ,?)');
+        // stmt.run(2, 1, 1599466541204, 'お試し', 'お試し', 0);
+        // stmt.finalize();
+
+        db.run(`INSERT INTO task(req,title,info,done) VALUES (${request.body.req},'${request.body.title}','${request.body.info}',0);`);
+
+        response.redirect('/user');
+        db.close();
+        
+});
+
+
 
 module.exports = router;
