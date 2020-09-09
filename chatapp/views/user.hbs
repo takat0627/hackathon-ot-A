@@ -9,13 +9,13 @@
         <label for="menu" class="close">×</label>
         <div class='sidebar text-center' id="sidebar">
             <div class="sidebar-header">
-                <div class="user_img"> 
+                <div class="user_img">
                     <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" width="100" height="100">
                 </div>
                 <div class="user_ib text-center">
                     <div class='mb-3'>
                         <p>ユーザー名</p>
-                        <p>{{ userName }}</p>
+                        <p>{{ user.name }}</p>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
 
     <main>
         <div id="contents">
-            <h1>{{ userName }}さんの個人タスク一覧ページ（簡易レスポンシブ済み）</h1>
+            <h1>{{ user.name }}さんの個人タスク一覧ページ（簡易レスポンシブ済み）</h1>
         </div>
         <nav>
             {{!-- チャット画面へ入室 --}}
@@ -54,7 +54,7 @@
 
         <div class="row main">
         <div id='name'>
-            <h2>ようこそ、{{ userName }}さん！</h2>
+            <h2>ようこそ、{{ user.name }}さん！</h2>
             <h3>以下、個人のタスクが列挙されます</h3>
         </div>
         </div>

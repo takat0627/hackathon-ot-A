@@ -2,43 +2,30 @@
 const dbModels = require('../models/');
 let userController = {
     //
-    // メソッド １
-    // パス: /user/
-    // レスポンス: 全てのユーザーを表示する
-    //
-    showAllUsers() {
-        dbModels.User.findAll().then(users => {
+
+    showAllUsersWithTasks: function (request, response, next) {
+        dbModels.User.findAll({
+            include: [
+                { model: dbModels.Task }
+            ]
+        }).then(users => {
             if (!users) {
                 console.log("ユーザーデータを取得できませんでした");
             } else {
                 console.log("ユーザーとれたよ");
-                return users;
+                console.log(users[0].name);
+                response.render('task', { userName: request.session.user.name, user: users });
+
             }
         })
     },
-    //
-    // メソッド 2
-    // パス: /user/:userId
-    // レスポンス: IDで指定されたユーザーを表示する
-    //
-    showUserById(user_id){
-        let userId = user_id;
-        if (!userId) {
-            console.log("ユーザーIDを取得できませんでした");
-        } else {
-            // Sequelizeのモデルを使ってデータを取得する
-            // findByPk Pk : PrimaryKey
-            dbModels.User.findByPk(userId).then(user => {
-                if (!user) {
-                    console.log("ユーザーデータを取得できませんでした");
-                } else {
-                    console.log("特定のユーザーを取得できました");
-                    return user;
-                }
-            });
-        }
-    },
 
+    getAllUsersCount() {
+        dbModels.User.count().then(dataCount => {
+            return dataCount;
+        })
+    },
+    //
     loginByName: function(request, response, next) {
         // ログインしたユーザーを適切に処理してユーザーの名前を返す.
         let userName = request.body.userName;
@@ -56,17 +43,19 @@ let userController = {
                     dbModels.User.create({
                         name: userName
                     }).then(createdUser => {
-                        request.session.userid = createdUser.id;
+                        request.session.user = createdUser;
+
                         response.redirect('/user');
                     });
                 } else {
                     console.log("特定のユーザーを取得できたのでログインします");
-                    request.session.userid = user.id;
+                    request.session.user = user;
                     response.redirect('/user');
                 }
             });
         }
-    }
+    },
+
 };
 
 module.exports = userController;
