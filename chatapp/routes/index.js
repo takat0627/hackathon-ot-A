@@ -19,14 +19,16 @@ router.get('/', function(request, response, next) {
 
 // 個人タスク一覧画面(ログイン時のみ)
 router.post('/user', function(request, response, next) {
+
+    //　暫定user.db(ID+name)
     const db = new sqlite3.Database('./db/user.db');
 
     db.serialize(function () {
         // テーブルがなければ作成
-        db.run(`CREATE TABLE IF NOT EXISTS user ( name TEXT )`);
+        db.run(`CREATE TABLE IF NOT EXISTS user ( id INTEGER primary key , name TEXT )`);
 
         let create = new Promise(function (resolve, reject) {
-            // 名前を取得している
+            // ID・名前を取得している
             db.get(`SELECT name FROM user WHERE name = '${request.body.userName}'`, function (err, row) {
                 let user_exists = false;
                 if (err) {
@@ -35,8 +37,8 @@ router.post('/user', function(request, response, next) {
                 else {
                     if (row !== undefined) {
                         request.session.username = row.name;
-                        response.redirect('/user');
                         user_exists = true;
+                        response.redirect('/user');
                     }
                     resolve(user_exists);
                 }
@@ -46,7 +48,7 @@ router.post('/user', function(request, response, next) {
         create.then(function (user_exists) {
             if (!user_exists) {
                 // prepare Statementでデータ挿入
-                let stmt = db.prepare(`INSERT INTO user VALUES (?)`);
+                let stmt = db.prepare(`INSERT INTO user(name) VALUES (?)`);
                 stmt.run([request.body.userName]);
                 stmt.finalize();
                 request.session.username = request.body.userName;
@@ -163,14 +165,37 @@ router.get('/task', function (request, response, next){
 
 // （共有用）全体タスクのサンプルに対するget（ひとまず直接URL叩くと見れるようにする）
 router.get('/task_sample', function (request, response, next){
+    
     response.render('samples/task_sample');
 });
 
 
+
 // タスク作成画面の表示
 router.get('/create-task', function (request, response, next){
-    // requestからユーザー情報を取得する
-    response.render('create-task', { userName: request.session.username });
+
+    let userData;
+    //　暫定user.db(ID+name)
+    const db = new sqlite3.Database('./db/user.db');
+
+         // 自分以外の全ユーザーを取得
+         db.all(`SELECT id, name FROM user WHERE NOT name = '${request.session.username}'`, function (err, user_data) {
+            if (err) {
+               console.log(err);
+            }
+            else {
+                // 自分以外のユーザーが存在する時
+                if (user_data !== undefined) {
+                    //デバッグ
+                    //response.send(user_data);
+                    userData = {
+                        user: user_data
+                    }
+                    response.render('create-task', userData);
+                    db.close();
+                }
+            }
+        });
 });
 
 
