@@ -37,69 +37,14 @@ nav {
     float: left;
     }
     
-/*
- * ボタンの共通設定
- */
-.common-button {
 
-}
-
-/*
- * トップ画面（index.hbs）に関する設定
- */
-.index-user_name {
-
-}
 
 .index-user_name_text {
     width: 200px;
 }
 
-.index-enter {
-
-}
-
-.index-enter_button {
-
-}
-
-/*
- * チャットルーム画面（room.hbs）に関する設定
- */
-.room-login_user {
-
- }
-
-.room-message {
-
-}
-
 .room-message_textarea {
     width: 500px;
-}
-
-.room-submit {
-
-}
-
-.room-publish_button {
-
-}
-
-.room-memo_button {
-
-}
-
-.room-thread {
-
-}
-
-.room-exit {
-
-}
-
-.room-exit_button {
-
 }
 
 
@@ -231,3 +176,17 @@ img{ max-width:100%;}
 }
 
 /* < create-task画面CSS*/
+
+/* 全体タスク画面CSS > */
+.task_contents {
+  float: left;
+  padding: 30px 15px 0 25px;
+  width: 80%;
+}
+
+.task_contents_box{
+  height: 516px;
+  overflow-y: auto;
+}
+
+/* < 全体タスク画面CSS */
