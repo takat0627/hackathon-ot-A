@@ -6,14 +6,19 @@ let userController = {
     showAllUsersWithTasks: function (request, response, next) {
         dbModels.User.findAll({
             include: [
-                { model: dbModels.Task }
+                {
+                    model: dbModels.Task,
+                    as: 'reqTask'
+                }
             ]
         }).then(users => {
             if (!users) {
                 console.log("ユーザーデータを取得できませんでした");
             } else {
-                console.log("ユーザーとれたよ");
-                console.log(users[0].name);
+                console.log("ユーザーが取得できました");
+                console.dir(users[0]);
+                console.dir(users[0].reqTask);
+                console.dir(users[0].reqTask[0].title);
                 response.render('task', { userName: request.session.user.name, user: users });
 
             }

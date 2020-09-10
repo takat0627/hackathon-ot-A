@@ -14,14 +14,17 @@ module.exports = {
       info: {
         type: Sequelize.STRING
       },
+      done: {
+        type: Sequelize.BOOLEAN
+      },
+      deadline: {
+        type: Sequelize.DATE
+      },
       reqUserId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       desUserId: {
-        type: Sequelize.INTEGER
-      },
-      done: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       createdAt: {
         allowNull: true,

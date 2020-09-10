@@ -47,7 +47,7 @@
                     <label style="font-size: large;">ユーザ{{id}}</label>
                     <div class="accordion" id="user{{id}}_all_task">
                         {{!-- タスクを持っているかどうか，持っていなければ何もないというカードを発行する --}}
-                        {{#unless hasTask}}
+                        {{#unless user.reqTask.Task}}
                         <div class="card text-white">
                             <div class="card-header" id="user{{ id }}_no_task">
                                 <h5 class="mb-0 text-center">
@@ -60,7 +60,7 @@
                         {{!-- タスクを持っている時の処理 --}}
                         {{else}}
                         {{!-- 階層になっていることに注意！task配下ではuser直下のidを参照するには../が必要 --}}
-                        {{#each task}}
+                        {{#each user.reqTask.Task.dataValues}}
                         {{#if done}}
                         <div class="card text-white bg-primary">
                             {{else}}
