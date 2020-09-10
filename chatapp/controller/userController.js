@@ -2,13 +2,12 @@
 const dbModels = require('../models/');
 let userController = {
     //
-
     showAllUsersWithTasks: function (request, response, next) {
         dbModels.User.findAll({
             include: [
                 {
                     model: dbModels.Task,
-                    as: 'reqTask'
+                    as: 'desTask',
                 }
             ]
         }).then(users => {
@@ -22,12 +21,6 @@ let userController = {
                 response.render('task', { userName: request.session.user.name, user: users });
 
             }
-        })
-    },
-
-    getAllUsersCount() {
-        dbModels.User.count().then(dataCount => {
-            return dataCount;
         })
     },
     //
@@ -60,7 +53,6 @@ let userController = {
             });
         }
     },
-
 };
 
 module.exports = userController;
