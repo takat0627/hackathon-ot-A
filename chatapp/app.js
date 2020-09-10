@@ -5,7 +5,7 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
-var session = require('express-session');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const nodemon = require("nodemon");
 const routes = require('./routes/index');
@@ -42,6 +42,7 @@ hbs.handlebars.registerHelper('isEquals', function(num1, num2) {
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -56,11 +57,11 @@ app.use(session({
   }
 }));
 
-var sessionCheck = function(req, res, next) {
+let sessionCheck = function(req, res, next) {
   if (req.session.user) {
     next();
   } else {
-    res.redirect('/login');
+    res.redirect('/index');
   }
 };
 

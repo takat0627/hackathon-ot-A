@@ -22,7 +22,7 @@ module.exports = function (socket, io) {
 
         // 投稿した日時を取得
         let dt = new Date();
-        data.dtFormat  = dt.toFormat('DDD MMM DD YYYY HH24:MI:SS');
+        data.dtFormat  = dt.toFormat('YYYY年MM月DD日　HH24時MI分SS秒');
 
         data.id=count;
         count++;
