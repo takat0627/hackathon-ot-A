@@ -22,12 +22,11 @@ router.get('/', function (request, response, next) {
 router.post('/user', userController.loginByName);
 
 // チャット退出後→個人一覧画面(データベースで情報取得の必要性がないためGET)
-router.get('/user', function (request, response, next){
-    if(request.session.user === undefined){
+router.get('/user', function (request, response, next) {
+    if (request.session.user === undefined) {
         response.redirect('/');
-    }else{
-        // requestからユーザー情報を取得する
-        response.render('user', { user: request.session.user });
+    } else {
+        response.render('user', { userName: request.session.username, id: request.session.userid });
     }
 });
 
@@ -53,5 +52,9 @@ router.get('/create-task', function (request, response, next){
 
 // タスク作成
 router.post('/create-task', taskController.createTask);
+
+// 個人タスクをJSONで返すサンプルルーティング
+router.get('/json', userController.showUsersTasks);
+
 
 module.exports = router;

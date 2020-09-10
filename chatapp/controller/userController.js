@@ -24,6 +24,46 @@ let userController = {
         })
     },
     //
+    showUsersTasks: function (request, response, next) {
+        if (request.session.user === undefined) {
+            response.redirect('/');
+        } else {
+            // requestからユーザー情報を取得する
+            dbModels.User.findByPk(request.session.user.id,{
+                include: [
+                    {
+                        model: dbModels.Task,
+                        as: 'desTask',
+                    }
+                ]
+            }).then(user_with_desTask => {
+                if (!user_with_desTask) {
+                    console.log("ユーザーデータを取得できませんでした");
+                } else {
+                    console.log("ユーザーが取得できました");
+                    // desTaskを持ったUser
+                    dbModels.User.findByPk(request.session.user.id,{
+                        include: [
+                            {
+                                model: dbModels.Task,
+                                as: 'reqTask',
+                            }
+                        ]
+                    }).then(user_with_reqTask => {
+                        if (!user_with_reqTask) {
+                            console.log("ユーザーデータを取得できませんでした");
+                        } else {
+                            console.log("ユーザーが取得できました");
+                            console.dir(user_with_desTask);
+                            console.dir(user_with_reqTask);
+                            response.json(user_with_desTask);
+                        }
+                    });
+                }
+            })
+        }
+    },
+    //
     loginByName: function(request, response, next) {
         // ログインしたユーザーを適切に処理してユーザーの名前を返す.
         let userName = request.body.userName;
