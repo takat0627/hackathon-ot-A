@@ -37,7 +37,7 @@ router.get('/room', function (request, response, next) {
     response.render('room', { user: request.session.user });
 });
 
-router.get('/task', userController.showAllUsersWithTasks);
+router.get('/task', userController.showAllUsersWithDestinationTasks);
 // // 全体たすく画面の表示
 // router.get('/task', function (request, response, next){
 //     if(request.session.user === undefined){

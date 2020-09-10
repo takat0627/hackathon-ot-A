@@ -67,6 +67,7 @@ img{ max-width:100%;}
 
 
 
+/* sidebarのcss */
 .user_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
 .user_ib h5 span{ font-size:13px; float:right;}
 .user_ib p{ font-size:14px; color:#989898; margin:auto}
@@ -89,6 +90,13 @@ img{ max-width:100%;}
 .inbox_menu { height: 550px; overflow-y: scroll;}
 
 .active_menu{ background:#ebebeb;}
+
+/* ボタンのサイズ統一 */
+.active_menu .btn {
+  width: 110px;
+}
+/* sidebarのcss */
+
 
 /* chat画面用CSS > */
 .incoming_msg_img {

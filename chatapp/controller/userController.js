@@ -16,11 +16,39 @@ let userController = {
                 console.log("ユーザーデータを取得できませんでした");
             } else {
                 console.log("ユーザーが取得できました");
-                console.dir(users[0]);
-                console.dir(users[0].reqTask);
-                console.dir(users[0].reqTask[0].title);
+                // console.dir(users[0]);
+                // console.dir(users[0].reqTask);
+                // console.dir(users[0].reqTask[0].title);
                 response.render('task', { userName: request.session.user.name, user: users });
 
+            }
+        })
+    },
+    showAllUsersWithDestinationTasks: function (request, response, next) {
+        // session
+        if(request.session.user === undefined){
+            response.redirect('/');
+        }
+        dbModels.User.findAll({
+            include: [
+                {
+                    model: dbModels.Task,
+                    as: 'desTask'
+                }
+            ]
+        }).then(users => {
+            if (!users) {
+                console.log("ユーザーデータを取得できませんでした");
+            } else {
+                console.log("ユーザーが取得できました");
+                // console.log(users);
+                // console.dir(users[0]);
+                // console.dir(users[0].desTask);
+                // console.dir(users[0].desTask[0].title);
+                /**
+                 * userのid = User[~].desTask[~].reqUserId <- ユーザもタスクも複数あって指定方法がわからない
+                 */
+                response.render('task', { userName: request.session.user.name, user: users });
             }
         })
     },
