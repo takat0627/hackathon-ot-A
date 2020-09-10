@@ -42,7 +42,7 @@
 }
 
 .card-header .btn {
-    width: 250px;
+    width: 275px;
 }
 
 /* チャットに合わせるんだけどstyleでこれ書きたい．．． */
@@ -51,6 +51,6 @@
 }
 
 
-/* #contents {
-    padding-top: 3em;
-} */
+.task_status {
+    font-size: 15px;
+}
