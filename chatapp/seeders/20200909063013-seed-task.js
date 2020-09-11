@@ -44,6 +44,42 @@ module.exports = {
       desUserId: 1,
       done: 0
     }], {});
+
+    // sample3
+    await queryInterface.bulkInsert('Tasks', [{
+      title: '新規プロジェクト立ち上げ',
+      info: '新規プロジェクトであるXXXを立ち上げる',
+      reqUserId: 2,
+      desUserId: 3,
+      done: 0
+    }], {});
+    
+    // sample4
+    await queryInterface.bulkInsert('Tasks', [{
+      title: 'Word2Vecの導入',
+      info: '現在のシステムで蓄積された文章コーパスを用いて単語を分散表現を獲得する',
+      reqUserId: 4,
+      desUserId: 5,
+      done: 0
+    }], {});
+
+    // sample5
+    await queryInterface.bulkInsert('Tasks', [{
+      title: '音声認識性能の向上',
+      info: '現在システムで採用している音声認識技術の性能向上を行う．',
+      reqUserId: 4,
+      desUserId: 6,
+      done: 0
+    }], {});
+
+    // sample6
+    await queryInterface.bulkInsert('Tasks', [{
+      title: 'データの整形',
+      info: '現在のシステムで蓄積されたデータを扱いやすいように整形する．',
+      reqUserId: 5,
+      desUserId: 6,
+      done: 0
+    }], {});
   },
 
   down: async (queryInterface, Sequelize) => {

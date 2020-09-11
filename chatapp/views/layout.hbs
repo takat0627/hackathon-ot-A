@@ -4,10 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Node Chat サンプル</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/flatly/bootstrap.min.css">
+    {{!-- マテリアルを使っているので下記はいらない？ --}}
+    {{!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/flatly/bootstrap.min.css"> --}}
+    {{!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> --}}
     <link rel="stylesheet" href="/stylesheets/style.css" />
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    {{!-- 上のものと被ってカードが開かなかったので，下の記述からここに移動させました． --}}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 
@@ -20,6 +25,7 @@
 
 <body>
     {{{body}}}
+</body>
 
 <script src="/javascripts/socket.js"></script>
 <script src="/javascripts/enter.js"></script>
@@ -28,9 +34,9 @@
 <script src="/javascripts/exit.js"></script>
 
 <!-- bootstrap-material-design用 -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+{{!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script> --}}
 <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
     integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
     crossorigin="anonymous"></script>
@@ -38,6 +44,5 @@
     integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
     crossorigin="anonymous"></script>
 <script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
-</body>
 
 </html>

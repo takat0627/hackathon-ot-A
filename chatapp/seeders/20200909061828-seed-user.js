@@ -27,6 +27,21 @@ module.exports = {
       name: 'Funatomi',
     }], {});
 
+    // sample4
+    await queryInterface.bulkInsert('Users', [{
+      name: 'takashima',
+    }], {});
+
+    // sample5
+    await queryInterface.bulkInsert('Users', [{
+      name: 'inoue',
+    }], {});
+
+    // sample6
+    await queryInterface.bulkInsert('Users', [{
+      name: 'tokitsu',
+    }], {});
+
   },
 
   down: async (queryInterface, Sequelize) => {

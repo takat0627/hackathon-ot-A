@@ -36,6 +36,7 @@ router.get('/room', function (request, response, next) {
     response.render('room', { user: request.session.user });
 });
 
+// router.get('/task', userController.showAllUsersWithDestinationTasks);
 router.get('/task', userController.showAllUsersWithTasks);
 
 // タスク作成画面の表示

@@ -28,7 +28,6 @@ let userController = {
             }
         })
     },
-
     // 個人タスクを返すルーティングのメソッド
     showUsersTasks: function (request, response, next) {
         if (request.session.user === undefined) {
