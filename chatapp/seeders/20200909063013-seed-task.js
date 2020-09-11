@@ -20,6 +20,22 @@ module.exports = {
       done: 0
     }], {});
 
+    await queryInterface.bulkInsert('Tasks', [{
+      title: '会社B訪問',
+      info: '会社Bのりんごさんに新商品のプレゼン',
+      reqUserId: 1,
+      desUserId: 2,
+      done: 0
+    }], {});
+
+    await queryInterface.bulkInsert('Tasks', [{
+      title: '会社C訪問',
+      info: '会社Cのりんごさんに新商品のプレゼン',
+      reqUserId: 2,
+      desUserId: 1,
+      done: 0
+    }], {});
+
     // sample2
     await queryInterface.bulkInsert('Tasks', [{
       title: 'SPAD論文執筆',
