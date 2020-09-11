@@ -38,12 +38,6 @@ router.get('/room', function (request, response, next) {
 
 router.get('/task', userController.showAllUsersWithTasks);
 
-// （共有用）全体タスクのサンプルに対するget（ひとまず直接URL叩くと見れるようにする）
-router.get('/task_sample', function (request, response, next){
-    response.render('samples/task_sample');
-});
-
-
 // タスク作成画面の表示
 router.get('/create-task', function (request, response, next){
     // requestからユーザー情報を取得する
@@ -55,6 +49,11 @@ router.post('/create-task', taskController.createTask);
 
 // 個人タスクをJSONで返すサンプルルーティング
 router.get('/json', userController.showUsersTasks);
+
+// （共有用）全体タスクのサンプルに対するget（ひとまず直接URL叩くと見れるようにする）
+router.get('/task_sample', function (request, response, next) {
+    response.render('samples/task_sample');
+});
 
 
 module.exports = router;

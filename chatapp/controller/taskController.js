@@ -32,10 +32,7 @@ let taskController = {
         });
       }
     });
-
   },
-
-
 }
 
 module.exports = taskController;
