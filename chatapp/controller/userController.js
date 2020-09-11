@@ -54,6 +54,7 @@ let userController = {
                             console.log("ユーザーデータを取得できませんでした");
                         } else {
                             console.log("ユーザーが取得できました");
+                            console.log(user_with_desTask.name);
                             console.dir(user_with_desTask);
                             console.dir(user_with_reqTask);
                             response.json(user_with_desTask);
