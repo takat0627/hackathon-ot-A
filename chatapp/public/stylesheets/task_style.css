@@ -8,7 +8,15 @@
 
 .card {
     margin: 1em;
+    /* background-color: PaleVioletRed; */
+}
+
+.destination_user_card {
     background-color: PaleVioletRed;
+}
+
+.request_user_card {
+    background-color: DodgerBlue;
 }
 
 .card-header {
