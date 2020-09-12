@@ -50,5 +50,4 @@ router.get('/task_sample', function (request, response, next) {
     response.render('samples/task_sample');
 });
 
-
 module.exports = router;

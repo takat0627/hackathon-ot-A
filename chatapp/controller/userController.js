@@ -25,13 +25,13 @@ let userController = {
                  * #2
                  * 次に結合後の中の何かで並べ替えるときは
                  * そのモデルをindex0，対象をindex1，オプションをindex2に記述することでソートが可能
-                 * 
-                 * 
+                 *
+                 *
                  * だと．おもっているのですが，ちゃんと並べ替えられるものとられないものがあって半泣きです．
                  * 個人タスクでも同様に並び替えられるものと並び替えられないものがいてギャン泣きです，
                  * ASCをDESCにすると逆に並び替えられていなかったものが並び変わります．なぜでしょう．．．
                  */
-                order: [["id", 'ASC'], ['desTask', "deadline", 'ASC']],
+                order: [["id", 'ASC'], [{ model: dbModels.Task, as: 'desTask'}, 'deadline', 'DESC']],
             }).then(users => {
                 if (!users) {
                     console.log("ユーザーデータを取得できませんでした");
@@ -62,11 +62,11 @@ let userController = {
                         include: {
                             model: dbModels.User,
                             as: 'reqUser'
-                        }   
+                        }
                     }
                 ],
                 // なぜなんだぁ
-                order: [['desTask', "deadline", 'ASC']],
+                order: [[{ model: dbModels.Task, as: 'desTask' }, 'deadline', 'DESC']],
             }).then(user_with_desTask => {
                 if (!user_with_desTask) {
                     console.log("ユーザーデータを取得できませんでした");
@@ -86,7 +86,7 @@ let userController = {
                             }
                         ],
                         // なぜだぁ．．．
-                        order: [['reqTask', "deadline", 'ASC']],
+                        order: [[{ model: dbModels.Task, as: 'reqTask' }, 'deadline', 'DESC']],
                     }).then(user_with_reqTask => {
                         if (!user_with_reqTask) {
                             console.log("ユーザーデータを取得できませんでした");
