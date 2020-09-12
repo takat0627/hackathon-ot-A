@@ -39,9 +39,10 @@
 
                 <form method="post" action="/create-task">
 
-                    <div class="index-task_title">
-                        <label>タスク名</label>
-                        <input type="text" id="title" name="title" class="index-user_name_text">
+                    <div class="form-group .bmd-form-group">
+                        <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
+                        <label for="formGroupExampleInput" class="bmd-label-floating">タスク名</label>
+                        <input type="text" class="form-control" id="title" name="title">
                     </div>
 
                     <div class="index-task_req">
