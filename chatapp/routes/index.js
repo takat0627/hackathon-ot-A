@@ -12,6 +12,7 @@ router.get('/', function (request, response, next) {
     let session = request.session;
     // セッション中のユーザーをリセット
     request.session.username = null;
+    request.session.userid = null;
     response.render('index');
     // response.end();
 });
