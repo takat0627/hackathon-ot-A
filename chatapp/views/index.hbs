@@ -1,18 +1,25 @@
-<div class="container">
-    <div class="row">
-        <h1>Node Chat サンプル</h1>
+
+<div class="index_container">
+<h3 class=" text-center">Node Chat Sample</h3>
+<div class="form-wrapper">
+    <h1>Sign In</h1>
+    <form method="post" action="/user">
+        <div class="form-group">
+            <label for="formGroupExampleInput" class="bmd-label-floating">User Name</label>
+            <input type="text" name="userName" class="form-control" id="formGroupExampleInput userName" required="required" />
+        </div>
+
+        <div class="button-panel">
+            <button type="submit" class="btn btn-raised btn-success button" title="Sign In" onclick="login()">Sign In</button>
+        </div>
+    </form>
+    <div class="form-footer">
+
     </div>
-    <div class="row">
-        {{!-- /room に'post'する --}}
-        <form method="post" action="/user">
-            <div class="index-user_name">
-                あなたの名前
-                <input type="text" id="userName" name="userName" class="index-user_name_text">
-            </div>
+</div>
+<p class="text-center top_spac"> ©︎ Copylight Rakus Intern A-team All Rights Reserved.</p>
+</div>
 
-            <div class='index-enter'>
-                <input type="button" value="ログイン" class="common-button index-enter_button" onclick="login()"/>
-            </div>
-        </form>
 
+<link rel="stylesheet" href="/stylesheets/index-style.css" />
 <script src="/javascripts/index.js"></script>
