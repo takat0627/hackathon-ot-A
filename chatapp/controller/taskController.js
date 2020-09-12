@@ -3,12 +3,8 @@ const dbModels = require('../models/');
 const userController = require('../controller/userController');
 
 let taskController = {
-  // method1 createUser
 
   createTask: function (request, response, next) {
-    // なぜかここでrequest.session.user.idを使えなかった.
-  
-    let des_user_id = request.body.des_name;
 
     dbModels.Task.create({
           title: request.body.title,
@@ -16,12 +12,26 @@ let taskController = {
           done: false,
           deadline: request.body.date,
           reqUserId: request.session.user.id,
-          desUserId: des_user_id
+          desUserId: request.body.des_name
         }).then(task => {
           console.log("タスクが正常に作成されました");
           console.log("タスク名：" + task.title);
           response.redirect('/user');
         });
+  },
+
+  updateTask: function (request, response, next) {
+
+    console.log(request.body.perfect);
+    dbModels.Task.update(
+      { done: 1 },
+      { where: { id: request.body.perfect } }
+    ).then(task => {
+        console.log(task.done);
+        console.log("タスクが正常に更新されました");
+        response.redirect('/user');
+    });
+    
   }
 }
 

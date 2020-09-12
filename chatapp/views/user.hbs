@@ -78,14 +78,20 @@
                                                         </div>
                                                         </button>
 
-                                                        <div class="task_status">
-                                                        <p><u><small>
+                                                        <div class="task_status text-right">
+                                                        
                                                         {{#if done}}
+                                                            <p><u><small>
                                                             タスク完了
+                                                            </small></u></p>
                                                         {{else}}
-                                                            タスク未完了
+                                                            <form action = "/update" method = "post">
+                                                                <input type="hidden" id="des-button-{{id}}" name="perfect" value="{{id}}" />
+                                                                <button type="submit" class="btn btn-raised btn-danger" >
+                                                                <p>タスク未完了</p>
+                                                                </button>
+                                                            </form>
                                                         {{/if}}
-                                                        </small></u></p>
                                                         </div>
                                                     </div>
                                                 </h5>
@@ -202,3 +208,4 @@
 </div>
 
 <link rel="stylesheet" href="/stylesheets/task_style.css" />
+<script src="/javascripts/update.js"></script>
