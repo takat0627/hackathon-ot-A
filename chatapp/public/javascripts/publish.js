@@ -1,5 +1,22 @@
 'use strict';
 
+
+function scrollToEnd() {
+    const messagesArea = document.getElementById('msg_history');
+    messagesArea.scrollTop = messagesArea.scrollHeight;
+  }
+
+var renderer = document.getElementById("msg_history");
+//要素が変化したときの処理を書く(この場合は下までスクロール)
+const observer = new MutationObserver((render) => {
+  scrollToEnd();
+});
+//監視する条件を書く
+//この場合、"msg_history"に子要素が追加されたとき
+observer.observe(renderer, {
+  childList: true,
+});
+
 // 投稿メッセージをサーバに送信する
 function publish() {
     // ユーザ名を取得
@@ -12,6 +29,9 @@ function publish() {
 
     // 投稿内容を送信
     socket.emit('sendMessageEvent', data);
+
+    // 送信後フォーム内の入力値を空にする
+    document.getElementById('message').value='';
 
     return false;
 }

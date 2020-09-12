@@ -1,7 +1,8 @@
 <div class="allContainer">
     <div class="box">
+    <h3 class=" text-center">allMessage</h3>
         <div class="inbox">
-            
+            <form method="post" action="/">
                 <div class="inbox_menus">
                     <div class="inbox_menu">
                         <div class="active_menu">
@@ -30,30 +31,24 @@
                             </button>
                         </div>
                         <div class="menu_list active_menu text-center">
-                            <a href="/" class="btn btn-raised ow-button">ログアウト</a>
+                            <a href="/" class="btn btn-raise ow-button">ログアウト</a>
                         </div>
                     </div>
                 </div>
-                <form method="post" onsubmit="return publish()">
                 <div class="mesgs">
                     <div class="msg_history" id="msg_history">
                         <!-- DOM -->
                     </div>
 
                     <div class="type_msg row">
-                        <div class="input_msg_write col-10 form-group">
-                                <label for="formGroupExampleInput" class="bmd-label-floating">Type a message</label>
-                                <input type="text" class="form-control col-10" id="message"/>
-                                 <span class="form-group bmd-form-group col-1">
-                                    <!-- needed to match padding for floating labels -->
-                                    <button type="submit" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm " value="投稿" >
-                                        <i class="fas fa-paper-plane" aria-hidden="true"></i>
-                                    </button>
-                                </span>
+                        <div class="input_msg_write col-10">
+                            <input type="text" class="write_msg" id="message" placeholder="Type a message" />
+                            <button class="msg_send_btn" type="button" value="投稿" onclick="publish()">
+                                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                            </button>
                         </div>
-                        <div class="col-2 taskButton">
-                           
-                            <a href="/create-task" class="btn btn-raised ow-button">
+                        <div class="col-2 ">
+                            <a href="/create-task" class="btn btn-raised btn-success ">
                                 <i class="fas fa-file"></i>
                             </a>
                         </div>
@@ -64,7 +59,7 @@
     </div>
 
 
-    <p class="text-center top_spac"> ©︎ Copylight Rakus Intern A-team All Rights Reserved.</p>
+        <p class="text-center top_spac"> ©︎ Copylight Rakus Intern A-team All Rights Reserved.</p>
 
-</div>
+    </div>
 </div>

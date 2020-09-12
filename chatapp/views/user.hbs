@@ -1,6 +1,5 @@
-<div class="container">
+<div class="allContainer">
     <div class="box">
-    <h3 class=" text-center"><strong>{{userName}}</strong>さんのタスク一覧</h3>
         <div class="inbox">
             <div class="inbox_menus">
                 <div class="inbox_menu">
@@ -16,7 +15,7 @@
                         </div>
                     </div>
                     <div class="menu_list active_menu text-center">
-                        <a href="/user" class="btn btn-raised btn-info">個人タスク</a>
+                        <a href="/user" class="btn btn-raised btn-success">個人タスク</a>
                     </div>
                     <div class="menu_list active_menu text-center">
                         <a href="/room" class="btn btn-raised btn-success">全体チャット</a>
@@ -30,14 +29,14 @@
                         </button>
                     </div>
                     <div class="menu_list active_menu text-center">
-                        <a href="/" class="btn btn-raised btn-danger">ログアウト</a>
+                        <a href="/" class="btn btn-raised ow-button">ログアウト</a>
                     </div>
                 </div>
             </div>
 
             {{!-- 持っているタスクを全部カードで表示，この時全部Openにする --}}
             <div id="contents" class="task_contents">
-                <div class="task_contents_box text-center">
+                <div class="nts_box text-center">
                     <div class='row'>
                         {{!-- 受け取ったタスク列 --}}
                         <div class="col user_task">
