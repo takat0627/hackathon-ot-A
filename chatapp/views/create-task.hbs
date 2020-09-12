@@ -10,8 +10,8 @@
                             <div class="user_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                             <div class="user_ib">
                                 <div class="user_ib">
-                                    <h5>User：{{user.name}}
-                                        <input id="userName" value={{user.name}} type="hidden" value="">
+                                    <h5>User：{{myUserName}}
+                                        <input id="userName" value={{myUserName}} type="hidden" value="">
                                     </h5>
                                 </div>
                             </div>
@@ -45,16 +45,19 @@
                         <input type="text" class="form-control" id="title" name="title">
                     </div>
 
-                    <div class="index-task_req">
-                        <label>ユーザー名</label>
-                        {{!-- <select name="des_name" id="des_name">
-                            {{#each user}}
-                            <option value={{id}}>{{name}}</option>
-                            {{/each}}
-                        </select> --}}
-                        <input type="text" id="des_name" name="des_name" class="index-user_name_text">
+                    
+                    <div class="form-group .bmd-form-group">
+                        <label for="custom-select-1c">依頼先</label>
+                        <select name="des_name" id="des_name" class="custom-select custom-select-lg">
+                            {{#each allUser}}
+                                {{#with dataValues}}
+                                    <option value={{id}}>{{name}}</option>
+                                {{/with}}
+                            {{/each }}
+                        </select>
                     </div>
 
+                    {{!-- datepickerが動作しないので,一旦htmlで簡単に時間が取得できるフォームで試しています --}}
                     <div class="index-task_date">
                         <label>期限</label>
                         <input type="date" name="date" id="date" min="2020-01-01" max="2020-12-31">
@@ -66,13 +69,30 @@
                             let yyyy = today.getFullYear();
                             let mm = ("0" + (today.getMonth() + 1)).slice(-2);
                             let dd = ("0" + today.getDate()).slice(-2);
-                            document.getElementById("date").value = yyyy + '-' + mm + '-' + dd;
+                            document.getElementById("date").value = `${yyyy}-${mm}-${dd}`;
                         }
                     </script>
 
-                    <div class="index-task_info">
-                        <label>メモ</label>
-                        <input type="text" id="info" name="info" class="index-user_name_text">
+                    {{!-- <div class="form-group .bmd-form-group">
+                        <label for="custom-select-1c">期限</label>
+                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                            <input type="text" id='date' class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                            <div class="input-group-append" id='date' data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div> --}}
+            
+                    {{!-- <script type="text/javascript">
+                        //$(function () {
+                            //$('#datetimepicker1').datetimepicker();
+                        });
+                    </script>  --}}
+
+                    <div class="form-group .bmd-form-group">
+                        <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
+                        <label for="formGroupExampleInput" class="bmd-label-floating">メモ</label>
+                        <input type="text" class="form-control" id="info" name="info">
                     </div>
 
                     {{!-- じぶんのIDを送る --}}

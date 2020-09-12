@@ -33,10 +33,7 @@ router.get('/room', function (request, response, next) {
 router.get('/task', userController.showAllUsersWithTasks);
 
 // タスク作成画面の表示
-router.get('/create-task', function (request, response, next){
-    // requestからユーザー情報を取得する
-    response.render('create-task', { user: request.session.user });
-});
+router.get('/create-task', userController.ShowAllUsers);
 
 // タスク作成
 router.post('/create-task', taskController.createTask);

@@ -5,7 +5,7 @@ function taskCreate() {
   let title = $('#title').val();
   let des_name = $('#des_name').val();
   let date = $('#date').val();
-
+  
   // 項目が未入力でないかチェックする
   if ((title === "") || (des_name === "") || (date === "")) {
     alert("入力を完全にしてください");
