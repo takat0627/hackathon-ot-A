@@ -1,128 +1,128 @@
 <div class="container">
     <div class="box">
-    <h3 class=" text-center">全タスク一覧</h3>
+    <h3 class=" text-center">全ユーザのタスク一覧</h3>
         <div class="inbox">
-            {{!-- <form method="post" action="/"> --}}
-                <div class="inbox_menus">
-                    <div class="inbox_menu">
-                        <div class="menu_list active_menu">
-                            <div class="menu_user">
-                                <div class="user_img"> <img src="https://ptetutorials.com/images/user-profile.png"
-                                        alt="sunil"> </div>
-                                <div class="user_ib">
-                                    <h5>User：{{user.name}}
-                                        <input id="userName" value={{user.name}} type="hidden" value="">
-                                    </h5>
-                                </div>
+            <div class="inbox_menus">
+                <div class="inbox_menu">
+                    <div class="menu_list active_menu">
+                        <div class="menu_user">
+                            <div class="user_img"> <img src="https://ptetutorials.com/images/user-profile.png"
+                                    alt="sunil"> </div>
+                            <div class="user_ib">
+                                <h5>User：{{userName}}
+                                    <input id="userName" value={{userName}} type="hidden" value="">
+                                </h5>
                             </div>
                         </div>
-                        <div class="menu_list active_menu text-center">
-                            <a href="/user" class="btn btn-raised btn-info">個人タスク</a>
-                        </div>
-                        <div class="menu_list active_menu text-center">
-                            <a href="/room" class="btn btn-raised btn-success">全体チャット</a>
-                        </div>
-                        <div class="menu_list active_menu text-center">
-                            <a href="/task" class="btn btn-raised btn-success">全体タスク</a>
-                        </div>
-                        <div class="menu_list active_menu text-center">
-                            <button type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                        <div class="menu_list active_menu text-center">
-                            <a href="/" class="btn btn-raised btn-danger">ログアウト</a>
-                        </div>
+                    </div>
+                    <div class="menu_list active_menu text-center">
+                        <a href="/user" class="btn btn-raised btn-info">個人タスク</a>
+                    </div>
+                    <div class="menu_list active_menu text-center">
+                        <a href="/room" class="btn btn-raised btn-success">全体チャット</a>
+                    </div>
+                    <div class="menu_list active_menu text-center">
+                        <a href="/task" class="btn btn-raised btn-success">全体タスク</a>
+                    </div>
+                    <div class="menu_list active_menu text-center">
+                        <button type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="menu_list active_menu text-center">
+                        <a href="/" class="btn btn-raised btn-danger">ログアウト</a>
                     </div>
                 </div>
-                <div id="contents" class="task_contents">
-                    <div class="task_contents_box text-center">
-                        {{#each user}}
-                        {{#with dataValues}}
-                            {{!-- 行区切り（2ユーザごとにrowを代入） --}}
-                            {{#unless (evenNumberChecker id)}}
-                                <div class="row">
-                            {{/unless}}
-                            {{!-- 列区切り（ユーザごとのタスク） --}}
-                                <div class="col user_task">
-                                    <div class="h5 text-left">
-                                        <strong><u>@{{ name }}</u></strong>
-                                    </div>
-                                    <div id="accordion_user{{id}}">
-                                    {{!-- ユーザがタスクを持っているか -> リストが空なら持っていない --}}
-                                    {{#unless desTask}}
-                                        <div class="card text-white bg-primary">
-                                            <div class="card-header" id="user{{ id }}_no_task">
-                                                <h5 class="mb-0">
-                                                    進行中のタスクはありません
-                                                </h5>
-                                            </div>
+            </div>
+            <div id="contents" class="task_contents">
+                <div class="task_contents_box text-center">
+                    {{#each user}}
+                    {{#with dataValues}}
+                        {{!-- 行区切り（2ユーザごとにrowを代入） --}}
+                        {{#unless (evenNumberChecker id)}}
+                            <div class="row">
+                        {{/unless}}
+                        {{!-- 列区切り（ユーザごとのタスク） --}}
+                            <div class="col user_task">
+                                <div class="h5 text-left">
+                                    <strong><u>@{{ name }}</u></strong>
+                                </div>
+                                <div id="accordion_user{{id}}">
+                                {{!-- ユーザがタスクを持っているか -> リストが空なら持っていない --}}
+                                {{#unless desTask}}
+                                    <div class="card text-white bg-primary">
+                                        <div class="card-header" id="user{{ id }}_no_task">
+                                            <h5 class="mb-0">
+                                                進行中のタスクはありません
+                                            </h5>
                                         </div>
-                                    {{!-- タスクを持っているとき --}}
-                                    {{else}}
-                                        {{#each desTask}}
-                                        {{!-- すみません，これ以降のidはタスクIDを指します．ユーザIDはeachを含め2階層上です． --}}
-                                        {{#with dataValues}}
-                                        <div class="card text-white">
-                                            <div class="card-header" id="user{{../../id}}_task_{{id}}">
-                                                <h5 class="mb-0">
-                                                    <div class="row">
-                                                        <button class="btn btn-light btn-secondary" type="button" data-toggle="collapse" data-target="#collapse_user{{../../id}}_task_{{id}}" aria-expanded="false" aria-controls="collapse_user{{../../id}}_task_{{id}}">
+                                    </div>
+                                {{!-- タスクを持っているとき --}}
+                                {{else}}
+                                    {{#each desTask}}
+                                    {{!-- すみません，これ以降のidはタスクIDを指します．ユーザIDはeachを含め2階層上です． --}}
+                                    {{#with dataValues}}
+                                    <div class="card text-white destination_user_card">
+                                        <div class="card-header" id="user{{../../id}}_task_{{id}}">
+                                            <h5 class="mb-0">
+                                                <div class="row">
+                                                    <button class="btn btn-light btn-secondary" type="button" data-toggle="collapse" data-target="#collapse_user{{../../id}}_task_{{id}}" aria-expanded="false" aria-controls="collapse_user{{../../id}}_task_{{id}}">
 
-                                                        <div class="text-left">
-                                                        <p class='h6'>タスク名</p>
-                                                        {{!-- <p class="h4"><u>{{title}}</u></p> --}}
-                                                        <p class="h5">{{title}}</p>
+                                                    <div class="text-left">
+                                                    <p class='h6'>タスク名</p>
+                                                    {{!-- <p class="h4"><u>{{title}}</u></p> --}}
+                                                    <p class="h5">{{title}}</p>
 
-                                                        </div>
-                                                        </button>
-
-                                                        <div class="task_status">
-                                                        <p><u><small>
-                                                        {{#if done}}
-                                                            タスク完了
-                                                        {{else}}
-                                                            タスク未完了
-                                                        {{/if}}
-                                                        </small></u></p>
-                                                        </div>
                                                     </div>
-                                                </h5>
-                                            </div>
+                                                    </button>
 
-                                            <div id="collapse_user{{../../id}}_task_{{id}}" class="collapse" aria-labelledby="user{{../../id}}_task_{{id}}" data-parent="#accordion_user{{id}}">
+                                                    <div class="task_status">
+                                                    <p><u><small>
+                                                    {{#if done}}
+                                                        タスク完了
+                                                    {{else}}
+                                                        タスク未完了
+                                                    {{/if}}
+                                                    </small></u></p>
+                                                    </div>
+                                                </div>
+                                            </h5>
+                                        </div>
+
+                                        <div id="collapse_user{{../../id}}_task_{{id}}" class="collapse" aria-labelledby="user{{../../id}}_task_{{id}}" data-parent="#accordion_user{{id}}">
                                             <div class="card-body text-left bg-light text-dark">
                                                 <h5><u>概要</u></h5>
                                                 <ul>
                                                 <li>タスク名：{{title}}</li>
-                                                {{!-- ここの時間も．．． --}}
-                                                <li>タスク期限：2020年9月11日12時</li>
-                                                {{!-- <li>タスク期限：{{unixtimeToDate date 'YYYY年 M月D日 HH24:MI:SS'}}</li> --}}
-                                                {{!-- ここ名前で持ってきたい --}}
-                                                <li>タスク依頼者：{{reqUserId}}</li>
+                                                {{!-- Date型を使う場合SQliteがUTCしか扱っていないので登録した時間をUTCと認識する．そうするとJSTで+9時間足された時間は実際の登録時間よりも+9時間さらにずれているということになる．なので関数側でこのズレを戻して表示する．この時formatも指定する --}}
+                                                <li>タスク期限：
+                                                    {{timeConverter  deadline 'YYYY年 M月D日 HH24:MI:SS'}}</li>
+                                                {{#with reqUser.dataValues}}
+                                                <li>タスク依頼者：{{name}}</li>
+                                                {{/with}}
                                                 </ul>
                                                 <h5><u>タスク詳細</u></h5>
                                                 <p>{{info}}</p>
                                             </div>
-                                            </div>
                                         </div>
-                                        {{/with}}
-                                        {{/each}}
-                                    {{/unless}}
-
                                     </div>
+                                    {{/with}}
+                                    {{/each}}
+                                {{/unless}}
+
                                 </div>
-                            {{#if (evenNumberChecker id)}}
                             </div>
-                            {{/if}}
-                        {{/with}}
-                        {{/each}}
+                        {{#if (evenNumberChecker id)}}
+                        </div>
+                        {{/if}}
+                    {{/with}}
+                    {{/each}}
                     </div>
-                </div>
             </div>
-         </div>
+        </div>
         <p class="text-center top_spac"> ©︎ Copylight Rakus Intern A-team All Rights Reserved.</p>
     </div>
+    {{!-- </div> --}}
 </div>
 {{!-- <script src="/javascripts/task.js"></script> --}}
 <link rel="stylesheet" href="/stylesheets/task_style.css" />

@@ -6,7 +6,6 @@ const userController = require('../controller/userController');
 const taskController = require('../controller/taskController');
 const { render } = require('../app');
 const router = express.Router();
-require('date-utils');
 
 // ログイン画面の表示
 router.get('/', function (request, response, next) {
@@ -22,13 +21,7 @@ router.get('/', function (request, response, next) {
 router.post('/user', userController.loginByName);
 
 // チャット退出後→個人一覧画面(データベースで情報取得の必要性がないためGET)
-router.get('/user', function (request, response, next) {
-    if (request.session.user === undefined) {
-        response.redirect('/');
-    } else {
-        response.render('user', { userName: request.session.username, id: request.session.userid });
-    }
-});
+router.get('/user', userController.showUsersTasks);
 
 // チャット画面の表示
 router.get('/room', function (request, response, next) {

@@ -12,11 +12,14 @@ module.exports = {
      * }], {});
     */
 
+
+    // 期限のフォーマット:yyyy-mm-dd hh:mm:ss
     await queryInterface.bulkInsert('Tasks', [{
       title: '会社A訪問',
       info: '会社Aのりんごさんに新商品のプレゼン',
       reqUserId: 1,
       desUserId: 2,
+      deadline: '2020-9-10 12:00:00',
       done: 0
     }], {});
 
@@ -25,6 +28,7 @@ module.exports = {
       info: '会社Bのりんごさんに新商品のプレゼン',
       reqUserId: 1,
       desUserId: 2,
+      deadline: '2020-9-9 12:00:00',
       done: 0
     }], {});
 
@@ -33,6 +37,7 @@ module.exports = {
       info: '会社Cのりんごさんに新商品のプレゼン',
       reqUserId: 2,
       desUserId: 1,
+      deadline: '2020-9-8 12:00:00',
       done: 0
     }], {});
 
@@ -42,6 +47,7 @@ module.exports = {
       info: 'SPADイメージングの論文を執筆し学会に寄稿する',
       reqUserId: 3,
       desUserId: 1,
+      deadline: '2020-9-14 18:00:00',
       done: 0
     }], {});
 
@@ -51,15 +57,17 @@ module.exports = {
       info: '新規プロジェクトであるXXXを立ち上げる',
       reqUserId: 2,
       desUserId: 3,
+      deadline: '2020-10-1 12:00:00',
       done: 0
     }], {});
     
     // sample4
     await queryInterface.bulkInsert('Tasks', [{
       title: 'Word2Vecの導入',
-      info: '現在のシステムで蓄積された文章コーパスを用いて単語を分散表現を獲得する',
+      info: '現在のシステムで蓄積された文章コーパスを用いて単語の分散表現を獲得する',
       reqUserId: 4,
       desUserId: 5,
+      deadline: '2020-9-17 15:00:00',
       done: 0
     }], {});
 
@@ -69,6 +77,7 @@ module.exports = {
       info: '現在システムで採用している音声認識技術の性能向上を行う．',
       reqUserId: 4,
       desUserId: 6,
+      deadline: '2020-9-15 13:00:00',
       done: 0
     }], {});
 
@@ -78,6 +87,7 @@ module.exports = {
       info: '現在のシステムで蓄積されたデータを扱いやすいように整形する．',
       reqUserId: 5,
       desUserId: 6,
+      deadline: '2020-9-17 15:00:00',
       done: 0
     }], {});
   },
