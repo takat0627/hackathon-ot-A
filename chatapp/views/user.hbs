@@ -44,7 +44,7 @@
                             <div class="h5 text-center">
                                 <p><strong><u>受け取ったタスク</u></strong></p>
                             </div>
-                            
+
                             {{#with user_with_desTask.dataValues}}
                                 {{!-- タスクを持っているか判定 -> リストが空なら持っていないので持ってないカード発行 --}}
                                 {{#unless desTask}}
@@ -79,16 +79,22 @@
                                                         </button>
 
                                                         <div class="task_status text-right">
-                                                        
+
                                                         {{#if done}}
-                                                            <p><u><small>
+                                                            {{!-- <p><u><small>
                                                             タスク完了
-                                                            </small></u></p>
+                                                            </small></u></p> --}}
+                                                            <form action="/redone-task" method="post">
+                                                                <input type="hidden" id="des-button-{{id}}" name="perfect" value="{{id}}" />
+                                                                <button type="submit" class="btn btn-raised btn-danger">
+                                                                    <p>タスク完了</p>
+                                                                </button>
+                                                            </form>
                                                         {{else}}
-                                                            <form action = "/update" method = "post">
+                                                            <form action = "/done-task" method = "post">
                                                                 <input type="hidden" id="des-button-{{id}}" name="perfect" value="{{id}}" />
                                                                 <button type="submit" class="btn btn-raised btn-danger" >
-                                                                <p>タスク未完了</p>
+                                                                    <p>タスク未完了</p>
                                                                 </button>
                                                             </form>
                                                         {{/if}}
@@ -96,7 +102,7 @@
                                                     </div>
                                                 </h5>
                                             </div>
-                                        
+
                                             <div id="collapse_user{{../../id}}_task_{{id}}" class="collapse show" aria-labelledby="user{{../../id}}_task_{{id}}" data-parent="#accordion_user{{../../id}}_task_{{id}}">
                                                 <div class="card-body text-left bg-light text-dark">
                                                     <h5><u>概要</u></h5>
@@ -170,11 +176,22 @@
                                                         {{/if}}
                                                         </small></u></p>
                                                         </div>
+
+                                                        <div class="task_status">
+                                                            <a href="/update-task">
+                                                                <button type="submit" class="btn btn-raised btn-danger">
+                                                                    <p>タスク更新</p>
+                                                                </button>
+                                                            </a>
+                                                        </div>
+
                                                     </div>
                                                 </h5>
                                             </div>
-                                        
+
                                             <div id="collapse_user{{../../id}}_task_{{id}}" class="collapse show" aria-labelledby="user{{../../id}}_task_{{id}}" data-parent="#accordion_user{{../../id}}_task_{{id}}">
+
+
                                                 <div class="card-body text-left bg-light text-dark">
                                                     <h5><u>概要</u></h5>
                                                     <ul>

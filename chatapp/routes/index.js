@@ -39,8 +39,14 @@ router.get('/create-task', userController.ShowAllUsers);
 // タスク作成
 router.post('/create-task', taskController.createTask);
 
+router.get('/update-task', userController.ShowAllUsers);
+// タスク更新
+router.post('/update-task', taskController.updateTask);
+
 // タスク進捗状況更新
-router.post('/update', taskController.updateTask);
+router.post('/done-task', taskController.doneTask);
+router.post('/redone-task', taskController.reDoneTask);
+
 
 // 個人タスクをJSONで返すサンプルルーティング
 router.get('/json', userController.showUsersTasks);
