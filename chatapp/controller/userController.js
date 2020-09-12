@@ -1,32 +1,51 @@
 'use strict';
 const dbModels = require('../models/');
-let userController = {
+const sequelize = require('sequelize');
 
+let userController = {
     // 全体タスクを返すルーティングのメソッド
     showAllUsersWithTasks: function (request, response, next) {
-        dbModels.User.findAll({
-            include: {
-                model: dbModels.Task,
-                as: 'desTask',
+        if (request.session.user === undefined) {
+            response.redirect('/');
+        } else {
+            dbModels.User.findAll({
                 include: {
-                    model: dbModels.User,
-                    as: 'reqUser'
-                    //ユーザーに紐づいて受理タスクが取得できる、受理タスクには送信した側のユーザー名が入っていないので取得する必要がある。
-                }
-            }
-        }).then(users => {
-            if (!users) {
-                console.log("ユーザーデータを取得できませんでした");
-            } else {
-                console.log("ユーザーが取得できました")
-                console.dir(users[0]);
-                console.dir(users[1]);
-                console.dir(users[2]);
-                console.log(users[0].desTask[0].reqUser.name);
-                response.render('task', { userName: request.session.user.name, user: users });
+                    model: dbModels.Task,
+                    as: 'desTask',
+                    include: {
+                        model: dbModels.User,
+                        as: 'reqUser'
+                        //ユーザーに紐づいて受理タスクが取得できる、受理タスクには送信した側のユーザー名が入っていないので取得する必要がある。
+                    }
+                },
+                /**
+                 * #1
+                 * モデル名を指定しない場合はfindAllとかしているテーブルでソートが可能
+                 * ここではUserのIDでまず並べ変える（この後の締め切り順がユーザごとに行われるように）
+                 * #2
+                 * 次に結合後の中の何かで並べ替えるときは
+                 * そのモデルをindex0，対象をindex1，オプションをindex2に記述することでソートが可能
+                 * 
+                 * 
+                 * だと．おもっているのですが，ちゃんと並べ替えられるものとられないものがあって半泣きです．
+                 * 個人タスクでも同様に並び替えられるものと並び替えられないものがいてギャン泣きです，
+                 * ASCをDESCにすると逆に並び替えられていなかったものが並び変わります．なぜでしょう．．．
+                 */
+                order: [["id", 'ASC'], ['desTask', "deadline", 'ASC']],
+            }).then(users => {
+                if (!users) {
+                    console.log("ユーザーデータを取得できませんでした");
+                } else {
+                    console.log("ユーザーが取得できました")
+                    console.dir(users[0].desTask[0]);
+                    console.dir(users[0].desTask[0].reqUser);
+                    console.log('user1\'s task1 deadline : ', users[0].desTask[0].deadline);
+                    console.log('user1\'s task1 <-', users[0].desTask[0].reqUser.name);
+                    response.render('task', { userName: request.session.user.name, user: users });
 
-            }
-        })
+                }
+            })
+        }
     },
     // 個人タスクを返すルーティングのメソッド
     showUsersTasks: function (request, response, next) {
@@ -39,8 +58,15 @@ let userController = {
                     {
                         model: dbModels.Task,
                         as: 'desTask',
+                        // 依頼された人
+                        include: {
+                            model: dbModels.User,
+                            as: 'reqUser'
+                        }   
                     }
-                ]
+                ],
+                // なぜなんだぁ
+                order: [['desTask', "deadline", 'ASC']],
             }).then(user_with_desTask => {
                 if (!user_with_desTask) {
                     console.log("ユーザーデータを取得できませんでした");
@@ -52,17 +78,28 @@ let userController = {
                             {
                                 model: dbModels.Task,
                                 as: 'reqTask',
+                                // 依頼した人
+                                include: {
+                                    model: dbModels.User,
+                                    as: 'desUser'
+                                }
                             }
-                        ]
+                        ],
+                        // なぜだぁ．．．
+                        order: [['reqTask', "deadline", 'ASC']],
                     }).then(user_with_reqTask => {
                         if (!user_with_reqTask) {
                             console.log("ユーザーデータを取得できませんでした");
                         } else {
                             console.log("ユーザーが取得できました");
-                            console.log(user_with_desTask.name);
-                            console.dir(user_with_desTask);
-                            console.dir(user_with_reqTask);
-                            response.json(user_with_desTask);
+                            console.log(user_with_desTask);
+                            console.log(user_with_reqTask);
+                            // response.json({desTask:user_with_desTask,reqTask:user_with_reqTask});
+                            response.render('user', {
+                                userName: request.session.user.name,
+                                user_with_desTask: user_with_desTask,
+                                user_with_reqTask: user_with_reqTask
+                            });
                         }
                     });
                 }

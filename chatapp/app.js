@@ -9,6 +9,9 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const nodemon = require("nodemon");
 const routes = require('./routes/index');
+// date関連
+require('date-utils');
+
 
 const app = express();
 
@@ -31,6 +34,19 @@ hbs.handlebars.registerHelper('evenNumberChecker', function(num) {
 hbs.handlebars.registerHelper('unixtimeToDate', function(unixtime, format) {
   return (new Date(unixtime).toFormat(format));
 });
+
+/**
+ * DBへ保存する際のtimezoneによる時間のずれを戻す
+ * 具体的にはJSTで登録したのにUTCとしてDBが認識するのでJST（UTC+9）として表示すると
+ * 実際の時間よりもこの+9が逆に邪魔する
+ * これを-9時間（マイクロ秒なので1000 * 60 * 60 * 9）戻して修正する
+ *  */ 
+hbs.handlebars.registerHelper('timeConverter', function(time, format) {
+  let UTC = new Date(time)
+  UTC.setTime(UTC.getTime() - 1000 * 60 * 60 * 9)
+  return UTC.toFormat(format);
+});
+
 // 二つの値が等しいかどうかの真偽値を返す
 hbs.handlebars.registerHelper('isEquals', function(num1, num2) {
   return num1===num2;
