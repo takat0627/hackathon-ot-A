@@ -9,8 +9,8 @@
                             <div class="user_img"> <img src="https://ptetutorials.com/images/user-profile.png"
                                     alt="sunil"> </div>
                             <div class="user_ib">
-                                <h5>User：{{userName}}
-                                    <input id="userName" value={{userName}} type="hidden" value="">
+                                <h5>User：{{user.name}}
+                                    <input id="userName" value={{user.name}} type="hidden" value="">
                                 </h5>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                             <div class="h5 text-center">
                                 <p><strong><u>受け取ったタスク</u></strong></p>
                             </div>
-                            
+
                             {{#with user_with_desTask.dataValues}}
                                 {{!-- タスクを持っているか判定 -> リストが空なら持っていないので持ってないカード発行 --}}
                                 {{#unless desTask}}
@@ -90,7 +90,7 @@
                                                     </div>
                                                 </h5>
                                             </div>
-                                        
+
                                             <div id="collapse_user{{../../id}}_task_{{id}}" class="collapse show" aria-labelledby="user{{../../id}}_task_{{id}}" data-parent="#accordion_user{{../../id}}_task_{{id}}">
                                                 <div class="card-body text-left bg-light text-dark">
                                                     <h5><u>概要</u></h5>
@@ -167,7 +167,7 @@
                                                     </div>
                                                 </h5>
                                             </div>
-                                        
+
                                             <div id="collapse_user{{../../id}}_task_{{id}}" class="collapse show" aria-labelledby="user{{../../id}}_task_{{id}}" data-parent="#accordion_user{{../../id}}_task_{{id}}">
                                                 <div class="card-body text-left bg-light text-dark">
                                                     <h5><u>概要</u></h5>

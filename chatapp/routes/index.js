@@ -16,7 +16,6 @@ router.get('/', function (request, response, next) {
     // response.end();
 });
 
-
 // 個人タスク一覧画面(ログイン時のみ)
 router.post('/user', userController.loginByName);
 

@@ -18,19 +18,6 @@ let userController = {
                         //ユーザーに紐づいて受理タスクが取得できる、受理タスクには送信した側のユーザー名が入っていないので取得する必要がある。
                     }
                 },
-                /**
-                 * #1
-                 * モデル名を指定しない場合はfindAllとかしているテーブルでソートが可能
-                 * ここではUserのIDでまず並べ変える（この後の締め切り順がユーザごとに行われるように）
-                 * #2
-                 * 次に結合後の中の何かで並べ替えるときは
-                 * そのモデルをindex0，対象をindex1，オプションをindex2に記述することでソートが可能
-                 *
-                 *
-                 * だと．おもっているのですが，ちゃんと並べ替えられるものとられないものがあって半泣きです．
-                 * 個人タスクでも同様に並び替えられるものと並び替えられないものがいてギャン泣きです，
-                 * ASCをDESCにすると逆に並び替えられていなかったものが並び変わります．なぜでしょう．．．
-                 */
                 order: [["id", 'ASC'], [{ model: dbModels.Task, as: 'desTask'}, 'deadline', 'DESC']],
             }).then(users => {
                 if (!users) {
@@ -41,7 +28,7 @@ let userController = {
                     console.dir(users[0].desTask[0].reqUser);
                     console.log('user1\'s task1 deadline : ', users[0].desTask[0].deadline);
                     console.log('user1\'s task1 <-', users[0].desTask[0].reqUser.name);
-                    response.render('task', { userName: request.session.user.name, user: users });
+                    response.render('task', { user: request.session.user, user: users });
 
                 }
             })
