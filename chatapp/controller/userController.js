@@ -115,10 +115,28 @@ let userController = {
             dbModels.User.findAll().then(user => {
                 console.log(request.session.user.name);
                 console.log(user[0]);
-                response.render('create-task', { 
+                response.render('create-task', {
                     myUserName: request.session.user.name,
                     allUser: user
                  });
+            })
+        }
+    },
+
+    // 自分以外の全ユーザーを取得
+    ShowAllUsersUpdate: function (request, response, next) {
+        if (request.session.user === undefined) {
+            response.redirect('/');
+        } else {
+            dbModels.User.findAll().then(user => {
+                // console.log(request.session.user.name);
+                // console.log(user[0]);
+                console.log(request.params.id);
+                response.render('update-task', {
+                    myUserName: request.session.user.name,
+                    allUser: user,
+                    taskId: request.params.id
+                });
             })
         }
     },
