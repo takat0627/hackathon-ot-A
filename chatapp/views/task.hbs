@@ -1,6 +1,5 @@
-<div class="container">
+<div class="allContainer">
     <div class="box">
-    <h3 class=" text-center">全ユーザのタスク一覧</h3>
         <div class="inbox">
             <div class="inbox_menus">
                 <div class="inbox_menu">
@@ -16,7 +15,7 @@
                         </div>
                     </div>
                     <div class="menu_list active_menu text-center">
-                        <a href="/user" class="btn btn-raised btn-info">個人タスク</a>
+                        <a href="/user" class="btn btn-raised btn-success">個人タスク</a>
                     </div>
                     <div class="menu_list active_menu text-center">
                         <a href="/room" class="btn btn-raised btn-success">全体チャット</a>
@@ -30,12 +29,12 @@
                         </button>
                     </div>
                     <div class="menu_list active_menu text-center">
-                        <a href="/" class="btn btn-raised btn-danger">ログアウト</a>
+                        <a href="/" class="btn btn-raised ow-button">ログアウト</a>
                     </div>
                 </div>
             </div>
             <div id="contents" class="task_contents">
-                <div class="task_contents_box text-center">
+                <div class="nts_box text-center">
                     {{#each user}}
                     {{#with dataValues}}
                         {{!-- 行区切り（2ユーザごとにrowを代入） --}}
@@ -63,7 +62,7 @@
                                     {{!-- すみません，これ以降のidはタスクIDを指します．ユーザIDはeachを含め2階層上です． --}}
                                     {{#with dataValues}}
                                     <div class="card text-white destination_user_card">
-                                        <div class="card-header" id="user{{../../id}}_task_{{id}}">
+                                        <div  class="card-header" id="user{{../../id}}_task_{{id}}">
                                             <h5 class="mb-0">
                                                 <div class="row">
                                                     <button class="btn btn-light btn-secondary" type="button" data-toggle="collapse" data-target="#collapse_user{{../../id}}_task_{{id}}" aria-expanded="false" aria-controls="collapse_user{{../../id}}_task_{{id}}">
@@ -120,9 +119,9 @@
                     </div>
             </div>
         </div>
-        <p class="text-center top_spac"> ©︎ Copylight Rakus Intern A-team All Rights Reserved.</p>
     </div>
     {{!-- </div> --}}
+     <p class="text-center top_spac"> ©︎ Copylight Rakus Intern A-team All Rights Reserved.</p>
 </div>
 {{!-- <script src="/javascripts/task.js"></script> --}}
 <link rel="stylesheet" href="/stylesheets/task_style.css" />
