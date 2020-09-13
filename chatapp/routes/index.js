@@ -4,7 +4,9 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const userController = require('../controller/userController');
 const taskController = require('../controller/taskController');
+const chatController = require('../controller/chatController');
 const { render } = require('../app');
+const { roomChatsHistory } = require('../controller/chatController');
 const router = express.Router();
 
 // ログイン画面の表示
@@ -25,10 +27,12 @@ router.post('/user', userController.loginByName);
 router.get('/user', userController.showUsersTasks);
 
 // チャット画面の表示
-router.get('/room', function (request, response, next) {
-    // requestからユーザー情報を取得する
-    response.render('room', { user: request.session.user });
-});
+// router.get('/room', function (request, response, next) {
+//     // requestからユーザー情報を取得する
+//     response.render('room', { user: request.session.user });
+
+// });
+router.get('/room', chatController.roomChatsHistory);
 
 // router.get('/task', userController.showAllUsersWithDestinationTasks);
 router.get('/task', userController.showAllUsersWithTasks);

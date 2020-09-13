@@ -1,4 +1,7 @@
 'use strict';
+// use sequelize
+const dbModels = require('../models/');
+const db = require('../models/');
 
 // 最後に投稿したユーザー
 let lastUser = ''
@@ -31,13 +34,28 @@ module.exports = function (socket, io) {
 
         // 最終投稿ユーザー
         console.log('最終投稿ユーザー: '+ lastUser);
-            console.log('client\'s name: ' + data.userName);
-            console.log('client\'s message: ' + data.message);
-            console.log('sucess!\n')
-            // ここで投稿メッセージを送信する
-            io.sockets.emit('publishMessageEvent', data);
-            // 最終投稿ユーザーを更新
-            lastUser = data.userName;
-        
+        console.log('client\'s name: ' + data.userName);
+        console.log('client\'s message: ' + data.message);
+        console.log('sucess!\n')
+
+        dbModels.User.findOne({
+            where: { name: data.userName }
+        }).then(user => {
+            if (!user) {
+                console.log("おかしいね");
+            } else {
+                dbModels.Chat.create({
+                    content: data.message,
+                    userId: user.id
+                }).then(() => {
+                    console.log("チャット履歴成功");
+                })
+            }
+        })
+        // ここで投稿メッセージを送信する
+        io.sockets.emit('publishMessageEvent', data);
+        // 最終投稿ユーザーを更新
+        lastUser = data.userName;
+
     });
 };
