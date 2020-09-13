@@ -95,7 +95,10 @@
                                                 <li>タスク名：{{title}}</li>
                                                 {{!-- Date型を使う場合SQliteがUTCしか扱っていないので登録した時間をUTCと認識する．そうするとJSTで+9時間足された時間は実際の登録時間よりも+9時間さらにずれているということになる．なので関数側でこのズレを戻して表示する．この時formatも指定する --}}
                                                 <li>タスク期限：
-                                                    {{unixtimeToDate  deadline 'YYYY年 M月D日 HH24:MI:SS'}}</li>
+                                                    {{!-- 日付登録では0時00分になってしまうので，ひとまず日時までにする
+                                                        あとで時間があれば時間も決定できるようにする --}}
+                                                    {{!-- {{unixtimeToDate  deadline 'YYYY年 M月D日 HH24:MI:SS'}}</li> --}}
+                                                    {{unixtimeToDate  deadline 'YYYY年 M月D日'}}</li>
                                                 {{#with reqUser.dataValues}}
                                                 <li>タスク依頼者：{{name}}</li>
                                                 {{/with}}
