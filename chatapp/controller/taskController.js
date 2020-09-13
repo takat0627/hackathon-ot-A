@@ -22,6 +22,7 @@ let taskController = {
 
   // method2
   updateTask: function (request, response, next) {
+    console.log(request.body.taskId);
     dbModels.Task.update(
       {
         title: request.body.title,
@@ -32,11 +33,10 @@ let taskController = {
         desUserId: request.body.des_userId
       },
       {
-        where: { id: request.body.taskId}
+        where: { id: request.body.taskId }
       }
-    ).then(task => {
+    ).then(() => {
       console.log("タスクが正常に更新されました");
-      console.log("タスク名：" + task.title);
       response.redirect('/user');
     });
   },
