@@ -39,7 +39,7 @@ router.get('/create-task', userController.ShowAllUsers);
 // タスク作成
 router.post('/create-task', taskController.createTask);
 
-router.get('/update-task', userController.ShowAllUsers);
+router.get('/update-task/:id', userController.ShowAllUsersUpdate);
 // タスク更新
 router.post('/update-task', taskController.updateTask);
 
