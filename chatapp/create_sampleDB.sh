@@ -13,4 +13,4 @@ fi
 # migrate
 $PWD/node_modules/.bin/sequelize db:migrate
 # seed
-$PWD/node_modules/.bin/sequelize db:seed:all
+# $PWD/node_modules/.bin/sequelize db:seed:all

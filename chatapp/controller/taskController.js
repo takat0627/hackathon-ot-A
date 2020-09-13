@@ -5,6 +5,9 @@ const userController = require('../controller/userController');
 let taskController = {
   // method1 createTask
   createTask: function (request, response, next) {
+    // 2020/09/11 00:00:00
+    console.log(request.body.date);
+    
     dbModels.Task.create({
       title: request.body.title,
       info: request.body.info,
@@ -14,7 +17,7 @@ let taskController = {
       desUserId: request.body.des_userId
     }).then(task => {
       console.log("タスクが正常に作成されました");
-      console.log("タスク名：" + task.title);
+      console.log("期限名：" + task.date);
       response.redirect('/user');
     });
   },

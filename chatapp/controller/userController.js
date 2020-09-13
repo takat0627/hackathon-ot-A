@@ -31,7 +31,7 @@ let userController = {
                  * 個人タスクでも同様に並び替えられるものと並び替えられないものがいてギャン泣きです，
                  * ASCをDESCにすると逆に並び替えられていなかったものが並び変わります．なぜでしょう．．．
                  */
-                order: [["id", 'ASC'], [{ model: dbModels.Task, as: 'desTask'}, 'deadline', 'DESC']],
+                order: [["id", 'ASC'], [{ model: dbModels.Task, as: 'desTask'}, 'deadline', 'ASC']],
             }).then(users => {
                 if (!users) {
                     console.log("ユーザーデータを取得できませんでした");
@@ -66,7 +66,7 @@ let userController = {
                     }
                 ],
                 // なぜなんだぁ
-                order: [[{ model: dbModels.Task, as: 'desTask' }, 'deadline', 'DESC']],
+                order: [[{ model: dbModels.Task, as: 'desTask' }, 'deadline', 'ASC']],
             }).then(user_with_desTask => {
                 if (!user_with_desTask) {
                     console.log("ユーザーデータを取得できませんでした");
@@ -86,7 +86,7 @@ let userController = {
                             }
                         ],
                         // なぜだぁ．．．
-                        order: [[{ model: dbModels.Task, as: 'reqTask' }, 'deadline', 'DESC']],
+                        order: [[{ model: dbModels.Task, as: 'reqTask' }, 'deadline', 'ASC']],
                     }).then(user_with_reqTask => {
                         if (!user_with_reqTask) {
                             console.log("ユーザーデータを取得できませんでした");

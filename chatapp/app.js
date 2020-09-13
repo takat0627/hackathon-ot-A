@@ -43,7 +43,7 @@ hbs.handlebars.registerHelper('unixtimeToDate', function(unixtime, format) {
  *  */ 
 hbs.handlebars.registerHelper('timeConverter', function(time, format) {
   let UTC = new Date(time)
-  UTC.setTime(UTC.getTime() - 1000 * 60 * 60 * 9)
+  UTC.setTime(UTC.getTime() + 1000 * 60 * 60 * 9)
   return UTC.toFormat(format);
 });
 
