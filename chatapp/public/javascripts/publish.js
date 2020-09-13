@@ -54,9 +54,9 @@ socket.on('publishMessageEvent', function (data) {
 });
 
 
-/* 
+/*
     - “テキストフォーム選択時”にCommand+Enterキーで投稿
-    
+
     Enterキーは改行で使うからここは取り合えずよく使うcmd+Enterで設定
     (キーコード)
     Enter : 13

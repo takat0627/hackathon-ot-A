@@ -1,7 +1,6 @@
 'use strict';
 const dbModels = require('../models/');
 const userController = require('../controller/userController');
-const db = require('../models/');
 
 let taskController = {
   // method1 createTask
@@ -64,8 +63,6 @@ let taskController = {
       response.redirect('/user');
     });
   },
-
-
 }
 
 module.exports = taskController;
