@@ -107,6 +107,22 @@ let userController = {
         }
     },
 
+    // 自分以外の全ユーザーを取得
+    ShowAllUsers: function(request, response, next) {
+        if (request.session.user === undefined) {
+            response.redirect('/');
+        } else {
+            dbModels.User.findAll().then(user => {
+                console.log(request.session.user.name);
+                console.log(user[0]);
+                response.render('create-task', { 
+                    myUserName: request.session.user.name,
+                    allUser: user
+                 });
+            })
+        }
+    },
+
     // ログインしたユーザーを適切に処理してユーザーの名前を返す.　router.post('/user')で使用
     loginByName: function(request, response, next) {
 

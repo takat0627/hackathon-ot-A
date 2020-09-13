@@ -12,6 +12,7 @@ router.get('/', function (request, response, next) {
     let session = request.session;
     // セッション中のユーザーをリセット
     request.session.username = null;
+    request.session.userid = null;
     response.render('index');
     // response.end();
 });
@@ -33,13 +34,19 @@ router.get('/room', function (request, response, next) {
 router.get('/task', userController.showAllUsersWithTasks);
 
 // タスク作成画面の表示
-router.get('/create-task', function (request, response, next){
-    // requestからユーザー情報を取得する
-    response.render('create-task', { user: request.session.user });
-});
+router.get('/create-task', userController.ShowAllUsers);
 
 // タスク作成
 router.post('/create-task', taskController.createTask);
+
+router.get('/update-task', userController.ShowAllUsers);
+// タスク更新
+router.post('/update-task', taskController.updateTask);
+
+// タスク進捗状況更新
+router.post('/done-task', taskController.doneTask);
+router.post('/redone-task', taskController.reDoneTask);
+
 
 // 個人タスクをJSONで返すサンプルルーティング
 router.get('/json', userController.showUsersTasks);
