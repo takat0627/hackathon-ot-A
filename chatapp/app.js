@@ -48,8 +48,8 @@ hbs.handlebars.registerHelper('timeConverter', function(time, format) {
 });
 
 // 二つの値が等しいかどうかの真偽値を返す
-hbs.handlebars.registerHelper('isEquals', function(num1, num2) {
-  return num1===num2;
+hbs.handlebars.registerHelper('isEquals', function(value1, value2) {
+  return value1===value2;
 });
 
 
