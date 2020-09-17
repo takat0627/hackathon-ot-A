@@ -1,7 +1,6 @@
 'use strict';
 const dbModels = require('../models/');
-const sequelize = require('sequelize');
-
+const bcrypt = require('bcrypt')
 let userController = {
     // 全体タスクを返すルーティングのメソッド
     showAllUsersWithTasks: function (request, response, next) {
@@ -31,7 +30,7 @@ let userController = {
                  * 個人タスクでも同様に並び替えられるものと並び替えられないものがいてギャン泣きです，
                  * ASCをDESCにすると逆に並び替えられていなかったものが並び変わります．なぜでしょう．．．
                  */
-                order: [["id", 'ASC'], [{ model: dbModels.Task, as: 'desTask'}, 'deadline', 'ASC']],
+                order: [["id", 'ASC'], [{ model: dbModels.Task, as: 'desTask' }, 'deadline', 'ASC']],
             }).then(users => {
                 if (!users) {
                     console.log("ユーザーデータを取得できませんでした");
@@ -53,7 +52,7 @@ let userController = {
             response.redirect('/');
         } else {
             // requestからユーザー情報を取得する
-            dbModels.User.findByPk(request.session.user.id,{
+            dbModels.User.findByPk(request.session.user.id, {
                 include: [
                     {
                         model: dbModels.Task,
@@ -73,7 +72,7 @@ let userController = {
                 } else {
                     console.log("ユーザーが取得できました");
                     // desTaskを持ったUser
-                    dbModels.User.findByPk(request.session.user.id,{
+                    dbModels.User.findByPk(request.session.user.id, {
                         include: [
                             {
                                 model: dbModels.Task,
@@ -108,7 +107,7 @@ let userController = {
     },
 
     // 自分以外の全ユーザーを取得
-    ShowAllUsers: function(request, response, next) {
+    ShowAllUsers: function (request, response, next) {
         if (request.session.user === undefined) {
             response.redirect('/');
         } else {
@@ -118,7 +117,7 @@ let userController = {
                 response.render('create-task', {
                     myUserName: request.session.user.name,
                     allUser: user
-                 });
+                });
             })
         }
     },
@@ -142,9 +141,14 @@ let userController = {
     },
 
     // ログインしたユーザーを適切に処理してユーザーの名前を返す.　router.post('/user')で使用
-    loginByName: function(request, response, next) {
+    loginByName: function (request, response, next) {
 
         let userName = request.body.userName;
+        let userPass = request.body.userPass;
+        let userPassHash = bcrypt.hashSync(userPass, bcrypt.genSaltSync(8));
+
+        console.log(bcrypt.compareSync("hoge", userPassHash));
+        console.log(bcrypt.compareSync("secret2", userPassHash));
         if (!userName) {
             console.log("ユーザーネームを取得できませんでした");
         } else {
@@ -157,16 +161,21 @@ let userController = {
 
                     // 新しいユーザーを作る
                     dbModels.User.create({
-                        name: userName
+                        name: userName,
+                        password: userPassHash,
                     }).then(createdUser => {
                         request.session.user = createdUser;
 
                         response.redirect('/user');
                     });
                 } else {
-                    console.log("特定のユーザーを取得できたのでログインします");
-                    request.session.user = user;
-                    response.redirect('/user');
+                    if (bcrypt.compareSync(userPass, user.password)) {
+                        console.log("特定のユーザーを取得できたのでログインします");
+                        request.session.user = user;
+                        response.redirect('/user');
+                    } else {
+                        response.redirect('/');
+                    }
                 }
             });
         }

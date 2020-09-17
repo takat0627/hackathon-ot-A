@@ -13,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.Task, { as: 'reqTask', foreignKey: 'reqUserId', sourceKey: 'id' });
       User.hasMany(models.Task, { as: 'desTask', foreignKey: 'desUserId', sourceKey: 'id' });
-
     }
   };
   User.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    password: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
